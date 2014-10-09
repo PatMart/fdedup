@@ -40,14 +40,14 @@ def file_md5(path):
     with open(path, 'rb') as f:
         md5 = hashlib.md5()
         md5.update(f.read())
-        return md5.digest()
+        return md5.hexdigest()
 
 
 def file_sha1(path):
     with open(path, 'rb') as f:
         sha1 = hashlib.sha1()
         sha1.update(f.read())
-        return sha1.digest()
+        return sha1.hexdigest()
 
 
 def main():

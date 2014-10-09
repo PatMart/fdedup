@@ -31,9 +31,9 @@ def find_duplicates(root, func):
 
     duplicates = []
     for paths in candidates:
-        duplicates.extend(find_candidates(paths, func))
+        duplicates.append(find_candidates(paths, func))
 
-    return duplicates
+    return itertools.chain(*duplicates)
 
 
 def file_hash(algorithm, path):
@@ -54,7 +54,7 @@ def main():
 
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
-        print find_duplicates(path, hash_func)
+        print list(find_duplicates(path, hash_func))
 
 
 if __name__ == '__main__':

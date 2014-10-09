@@ -38,7 +38,7 @@ def find_duplicates(root):
 
     duplicates = []
     for paths in candidates:
-        duplicates.extend(list(find_candidates(paths, file_md5)))
+        duplicates.extend(find_candidates(paths, file_md5))
 
     return duplicates
 

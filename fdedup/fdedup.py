@@ -36,18 +36,11 @@ def find_duplicates(root, func):
     return duplicates
 
 
-def file_md5(path):
+def file_hash(algorithm, path):
     with open(path, 'rb') as f:
-        md5 = hashlib.md5()
-        md5.update(f.read())
-        return md5.hexdigest()
-
-
-def file_sha1(path):
-    with open(path, 'rb') as f:
-        sha1 = hashlib.sha1()
-        sha1.update(f.read())
-        return sha1.hexdigest()
+        hasher = hashlib.new(algorithm)
+        hasher.update(f.read())
+        return hasher.hexdigest()
 
 
 def main():
@@ -56,17 +49,12 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('paths', nargs='+', metavar='PATH', help='paths to scan for duplicates')
     hashes = parser.add_mutually_exclusive_group()
-    hashes.add_argument('--md5', action='store_true', default=True, help='detect duplicates using md5')
-    hashes.add_argument('--sha1', action='store_true', help='detect duplicates using sha1')
+    hashes.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     opts = parser.parse_args()
 
+    hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
-        if opts.md5:
-            print find_duplicates(path, file_md5)
-        elif opts.sha1:
-            print find_candidates(path, file_sha1)
-        else:
-            assert False
+        print find_duplicates(path, hash_func)
 
 
 if __name__ == '__main__':

@@ -49,6 +49,7 @@ def file_sha1(path):
         sha1.update(f.read())
         return sha1.digest()
 
+
 def main():
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',

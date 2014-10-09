@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import functools
 
 import hashlib
 
@@ -11,8 +12,7 @@ import itertools
 
 def find_files(root):
     def join(path, _, files):
-        return itertools.imap(os.path.join,
-                              itertools.cycle([path]),
+        return itertools.imap(functools.partial(os.path.join, path),
                               files)
 
     return itertools.chain(*itertools.starmap(join, os.walk(root)))

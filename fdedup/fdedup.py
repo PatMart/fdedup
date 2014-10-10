@@ -65,22 +65,13 @@ def main():
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('paths', nargs='+', metavar='PATH', 
-                        help='paths to scan for duplicates')
+    parser.add_argument('paths', nargs='+', metavar='PATH', help='paths to scan for duplicates')
 
     verbosity = parser.add_mutually_exclusive_group()
-    verbosity.add_argument('-v', '--verbose', action='count', 
-                           default=0, help='be verbose')
-    verbosity.add_argument('-q', '--quiet', action='store_true', 
-                           help='be quiet')
+    verbosity.add_argument('-v', '--verbose', action='count', default=0, help='be verbose')
+    verbosity.add_argument('-q', '--quiet', action='store_true', help='be quiet')
 
-    parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', 
-                        help='hash algorithm to use')
-    parser.add_argument('paths', nargs='+', metavar='PATH',
-                        help='paths to scan for duplicates')
-    hashes = parser.add_mutually_exclusive_group()
-    hashes.add_argument('--hash', choices=hashlib.algorithms,
-                        default='md5', help='hash algorithm to use')
+    parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     opts = parser.parse_args()
 
     log_level = logging.WARN

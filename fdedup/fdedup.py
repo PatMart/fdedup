@@ -34,8 +34,8 @@ def find_candidates(groups, func):
     return (v for v in candidates.values() if len(v) > 1)
 
 
-def find_duplicates(root, func):
-    paths = iterate_files(root)
+def find_duplicates(paths, func):
+    paths = itertools.chain(*itertools.imap(iterate_files, paths))
     groups = [paths]
     groups = find_candidates(groups, os.path.getsize)
     groups = find_candidates(groups, lambda path: func(path, size=1024))
@@ -93,11 +93,10 @@ def main():
     verify_paths(opts.paths)
 
     hash_func = functools.partial(file_hash, opts.hash)
-    for path in opts.paths:
-        for group in find_duplicates(path, hash_func):
-            print ''
-            for path in group:
-                print path
+    for group in find_duplicates(opts.paths, hash_func):
+        print ''
+        for path in group:
+            print path
 
 
 if __name__ == '__main__':

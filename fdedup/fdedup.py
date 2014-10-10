@@ -30,14 +30,15 @@ def find_duplicates(root, func):
     paths = find_files(root)
     groups = [paths]
     groups = find_candidates(groups, os.path.getsize)
+    groups = find_candidates(groups, lambda path: func(path, size=1024))
     groups = find_candidates(groups, func)
     return groups
 
 
-def file_hash(algorithm, path):
+def file_hash(algorithm, path, size=-1):
     with open(path, 'rb') as f:
         hasher = hashlib.new(algorithm)
-        hasher.update(f.read())
+        hasher.update(f.read(size))
         return hasher.hexdigest()
 
 

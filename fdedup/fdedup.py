@@ -87,6 +87,8 @@ def main():
                         format='%(asctime)s %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
 
+    verify_paths(opts.paths)
+
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
         for group in find_duplicates(path, hash_func):

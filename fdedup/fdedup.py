@@ -54,6 +54,13 @@ def file_hash(algorithm, path, size=-1, block_size=65536):
         return hasher.hexdigest()
 
 
+def verify_paths(paths):
+    for path in paths:
+        if not os.path.exists(path):
+            logging.error('No such file or directory: %s', path)
+            sys.exit(22)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
@@ -89,13 +96,7 @@ def main():
                         format='%(asctime)s %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
 
-    for path in opts.paths:
-        if not os.path.exists(path):
-            logging.error('No such file or directory: %s', path)
-            return 22
-
     hash_func = functools.partial(file_hash, opts.hash)
-
     for path in opts.paths:
         for group in find_duplicates(path, hash_func):
             print ''

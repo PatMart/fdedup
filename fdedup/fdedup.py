@@ -18,7 +18,7 @@ def find_files(root):
     return itertools.chain(*itertools.starmap(join, os.walk(root)))
 
 
-def find_candidates(groups, func, *args):
+def find_candidates(groups, func):
     candidates = {}
     for group in groups:
         for path in group:

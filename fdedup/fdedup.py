@@ -47,8 +47,7 @@ def main():
         description='Find file duplicates.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('paths', nargs='+', metavar='PATH', help='paths to scan for duplicates')
-    hashes = parser.add_mutually_exclusive_group()
-    hashes.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
+    parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     opts = parser.parse_args()
 
     hash_func = functools.partial(file_hash, opts.hash)

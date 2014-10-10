@@ -79,7 +79,10 @@ def main():
 
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
-        print list(find_duplicates(path, hash_func))
+        for group in find_duplicates(path, hash_func):
+            print ''
+            for path in group:
+                print path
 
 
 if __name__ == '__main__':

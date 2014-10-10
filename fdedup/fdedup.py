@@ -33,10 +33,10 @@ def find_duplicates(func, root):
     return itertools.chain(*duplicates)
 
 
-def file_hash(algorithm, path):
+def file_hash(algorithm, path, block_size=1024):
     with open(path, 'rb') as f:
         hasher = hashlib.new(algorithm)
-        hasher.update(f.read())
+        hasher.update(f.read(block_size))
         return hasher.hexdigest()
 
 

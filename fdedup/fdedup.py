@@ -13,6 +13,9 @@ import itertools
 
 
 def iterate_files(root):
+    if os.path.isfile(root):
+        return [root]
+
     def join(path, _, files):
         return itertools.imap(functools.partial(os.path.join, path),
                               files)

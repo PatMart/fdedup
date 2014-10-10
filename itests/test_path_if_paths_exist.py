@@ -6,7 +6,7 @@ import subprocess
 
 class Test(unittest.TestCase):
     def test_path_exist(self):
-        code = subprocess.call(['./fdedup/fdedup.py', 'fdedup'])
+        code = subprocess.call(['./fdedup/fdedup.py', './static'])
         self.assertEqual(0, code)
 
     def test_path_does_not_exist(self):

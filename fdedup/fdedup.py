@@ -54,13 +54,6 @@ def file_hash(algorithm, path, size=-1, block_size=65536):
         return hasher.hexdigest()
 
 
-def check_paths(paths):
-    for path in paths:
-        if not os.path.exists(path):
-            print '\x1b[0;31mERROR: \x1b[0m Folder "' + path + '" does not exist.'
-            sys.exit(5)
-
-
 def main():
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
@@ -102,8 +95,6 @@ def main():
             return 22
 
     hash_func = functools.partial(file_hash, opts.hash)
-
-    check_paths(opts.paths)
 
     for path in opts.paths:
         for group in find_duplicates(path, hash_func):

@@ -69,6 +69,11 @@ def main():
                         format='%(asctime)s %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
 
+    for path in opts.paths:
+        if not os.path.exists(path):
+            logging.error('No such file or directory: %s', path)
+            return 22
+
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
         print list(find_duplicates(path, hash_func))

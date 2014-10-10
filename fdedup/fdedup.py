@@ -12,7 +12,7 @@ import sys
 import itertools
 
 
-def find_files(root):
+def iterate_files(root):
     def join(path, _, files):
         return itertools.imap(functools.partial(os.path.join, path),
                               files)
@@ -32,7 +32,7 @@ def find_candidates(groups, func):
 
 
 def find_duplicates(root, func):
-    paths = find_files(root)
+    paths = iterate_files(root)
     groups = [paths]
     groups = find_candidates(groups, os.path.getsize)
     groups = find_candidates(groups, lambda path: func(path, size=1024))

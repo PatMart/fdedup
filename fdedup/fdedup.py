@@ -18,7 +18,7 @@ def find_files(root):
     return itertools.chain(*itertools.starmap(join, os.walk(root)))
 
 
-def find_candidates(func, groups):
+def find_candidates(groups, func, *args):
     candidates = {}
     for group in groups:
         for path in group:
@@ -26,11 +26,11 @@ def find_candidates(func, groups):
     return (v for v in candidates.values() if len(v) > 1)
 
 
-def find_duplicates(func, root):
+def find_duplicates(root, func):
     paths = find_files(root)
     groups = [paths]
-    groups = find_candidates(os.path.getsize, groups)
-    groups = find_candidates(func, groups)
+    groups = find_candidates(groups, os.path.getsize)
+    groups = find_candidates(groups, func)
     return groups
 
 
@@ -52,7 +52,7 @@ def main():
 
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
-        print list(find_duplicates(hash_func, path))
+        print list(find_duplicates(path, hash_func))
 
 
 if __name__ == '__main__':

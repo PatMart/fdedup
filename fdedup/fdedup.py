@@ -18,25 +18,27 @@ def find_files(root):
     return itertools.chain(*itertools.starmap(join, os.walk(root)))
 
 
-def find_candidates(func, paths):
+def find_candidates(groups, func, *args):
     candidates = {}
-    for path in paths:
-        candidates.setdefault(func(path), []).append(path)
+    for group in groups:
+        for path in group:
+            candidates.setdefault(func(path), []).append(path)
     return (v for v in candidates.values() if len(v) > 1)
 
 
-def find_duplicates(func, root):
+def find_duplicates(root, func):
     paths = find_files(root)
-    candidates = find_candidates(os.path.getsize, paths)
-    duplicates = itertools.imap(functools.partial(find_candidates, func),
-                                candidates)
-    return itertools.chain(*duplicates)
+    groups = [paths]
+    groups = find_candidates(groups, os.path.getsize)
+    groups = find_candidates(groups, lambda path: func(path, size=1024))
+    groups = find_candidates(groups, func)
+    return groups
 
 
-def file_hash(algorithm, path):
+def file_hash(algorithm, path, size=-1):
     with open(path, 'rb') as f:
         hasher = hashlib.new(algorithm)
-        hasher.update(f.read())
+        hasher.update(f.read(size))
         return hasher.hexdigest()
 
 
@@ -51,7 +53,7 @@ def main():
 
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:
-        print list(find_duplicates(hash_func, path))
+        print list(find_duplicates(path, hash_func))
 
 
 if __name__ == '__main__':

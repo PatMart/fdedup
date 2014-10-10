@@ -5,6 +5,7 @@ import argparse
 import functools
 
 import hashlib
+import json
 import logging
 
 import os
@@ -75,6 +76,7 @@ def main():
     verbosity.add_argument('-q', '--quiet', action='store_true', help='be quiet')
 
     parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
+    parser.add_argument('--json', action='store_true', help='report in json')
     opts = parser.parse_args()
 
     log_level = logging.WARN
@@ -93,10 +95,15 @@ def main():
     verify_paths(opts.paths)
 
     hash_func = functools.partial(file_hash, opts.hash)
-    for group in find_duplicates(opts.paths, hash_func):
-        print ''
-        for path in group:
-            print path
+    groups = find_duplicates(opts.paths, hash_func)
+    if opts.json:
+        groups = list(groups)
+        print json.dumps(groups, indent=2)
+    else:
+        for group in groups:
+            print ''
+            for path in group:
+                print path
 
 
 if __name__ == '__main__':

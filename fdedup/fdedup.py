@@ -28,7 +28,8 @@ def find_candidates(func, groups):
 
 def find_duplicates(func, root):
     paths = find_files(root)
-    groups = find_candidates(os.path.getsize, [paths])
+    groups = [paths]
+    groups = find_candidates(os.path.getsize, groups)
     groups = find_candidates(func, groups)
     return groups
 

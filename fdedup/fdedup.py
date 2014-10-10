@@ -65,7 +65,9 @@ def main():
     if opts.quiet:
         log_level = log_level.ERROR
 
-    logging.basicConfig(level=log_level)
+    logging.basicConfig(level=log_level,
+                        format='%(asctime)s %(levelname)s: %(message)s',
+                        datefmt='%m/%d/%Y %H:%M:%S')
 
     hash_func = functools.partial(file_hash, opts.hash)
     for path in opts.paths:

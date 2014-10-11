@@ -34,8 +34,8 @@ def find_candidates(groups, func):
         for path in group:
             group_candidates.setdefault(func(path), []).append(path)
         candidates.update(
-            (item for item in group_candidates.items() if len(item[1]) > 1))
-    return (v for v in candidates.values() if len(v) > 1)
+            (item for item in group_candidates.iteritems() if len(item[1]) > 1))
+    return (v for v in candidates.itervalues() if len(v) > 1)
 
 
 def find_duplicates(paths, func):

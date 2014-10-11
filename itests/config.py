@@ -53,4 +53,12 @@ tests = [
         'stdout': json.dumps([]),
         'stderr': ''
     },
+    {
+        'args': ['./fdedup/fdedup.py', '--json', './static/empty', './static/empty.copy'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['./static/empty', './static/empty.copy']
+        ]),
+        'stderr': ''
+    },
 ]

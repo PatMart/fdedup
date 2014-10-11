@@ -45,5 +45,7 @@ class Test(unittest.TestCase):
             pipe = subprocess.Popen(test['args'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = pipe.communicate()
             self.assertEqual(test['returncode'], pipe.returncode)
-            self.assertEqualNormalized(json.loads(test['stdout']), json.loads(out))
-            self.assertEqual(test['stderr'], err)
+            if 'stdout' in test:
+                self.assertEqualNormalized(json.loads(test['stdout']), json.loads(out))
+            if 'stderr' in test:
+                self.assertEqual(test['stderr'], err)

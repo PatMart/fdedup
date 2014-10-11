@@ -6,7 +6,15 @@ import unittest
 import subprocess
 
 
+def normalize(groups):
+    return sorted(map(sorted, groups))
+
+
 class Test(unittest.TestCase):
+
+    def assertEqualNormalized(self, expected, actual):
+        self.assertEqual(normalize(expected), normalize(actual))
+
     def test_filenames_in_path(self):
         expected = [
             ['./static/chaplain', './static/chaplain.copy']
@@ -17,5 +25,5 @@ class Test(unittest.TestCase):
                                 stderr=subprocess.PIPE)
         out, err = pipe.communicate()
         self.assertEqual(0, pipe.returncode)
-        self.assertEqual(expected, json.loads(out))
+        self.assertEqualNormalized(expected, json.loads(out))
         self.assertEqual('', err)

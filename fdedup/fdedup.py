@@ -44,18 +44,24 @@ def find_duplicates(paths, func):
     return groups
 
 
-def file_hash(algorithm, path, size=-1, block_size=65536):
+def chunk_reader(fileobject, chunk_size):
+    while True:
+        chunk = fileobject.read(chunk_size)
+        if not chunk:
+            break
+        yield chunk
+
+
+def file_hash(algorithm, path, size=-1, chunk_size=65536):
+    hasher = hashlib.new(algorithm)
     with open(path, 'rb') as f:
-        hasher = hashlib.new(algorithm)
         read = 0
-        data = f.read(block_size)
-        while len(data) > 0:
-            hasher.update(data)
-            read += len(data)
+        for chunk in chunk_reader(f, chunk_size):
+            read += len(chunk)
+            hasher.update(chunk)
             if size != -1 and read >= size:
                 break
-            data = f.read(block_size)
-        return hasher.hexdigest()
+    return hasher.hexdigest()
 
 
 def verify_paths(paths):

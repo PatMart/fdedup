@@ -47,4 +47,12 @@ tests = [
         ]),
         'stderr': ''
     },
+    {
+        'args': ['./fdedup/fdedup.py', '--json', './static/issue 9/ydg2DF', './static/issue 9/A2VcHL'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['']
+        ]),
+        'stderr': ''
+    },
 ]

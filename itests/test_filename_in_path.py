@@ -18,6 +18,12 @@ tests = [
             ['./static/chaplain', './static/chaplain.copy']
         ]),
         'stderr': ''
+    },
+    {
+        'args': ['./fdedup/fdedup.py', '--json', './static/chaplain', './static/chaplain.modified'],
+        'returncode': 0,
+        'stdout': json.dumps([]),
+        'stderr': ''
     }
 ]
 

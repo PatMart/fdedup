@@ -49,7 +49,7 @@ def file_hash(algorithm, path, size=-1, block_size=65536):
         hasher = hashlib.new(algorithm)
         read = 0
         data = f.read(block_size)
-        while len(data) > 1:
+        while len(data) > 0:
             hasher.update(data)
             read += len(data)
             if size != -1 and read >= size:

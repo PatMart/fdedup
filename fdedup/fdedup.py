@@ -10,18 +10,21 @@ import logging
 
 import os
 import sys
-import itertools
 
 
 def iterate_files(root):
     if os.path.isfile(root):
-        return [root]
+        yield root
 
-    def join(path, _, files):
-        return itertools.imap(functools.partial(os.path.join, path),
-                              files)
+    for path, dirs, files in os.walk(root):
+        for f in files:
+            yield os.path.join(path, f)
 
-    return itertools.chain(*itertools.starmap(join, os.walk(root)))
+
+def iterate_paths(paths):
+    for path in paths:
+        for f in iterate_files(path):
+            yield f
 
 
 def find_candidates(groups, func):
@@ -36,7 +39,7 @@ def find_candidates(groups, func):
 
 
 def find_duplicates(paths, func):
-    paths = itertools.chain(*itertools.imap(iterate_files, paths))
+    paths = iterate_paths(paths)
     groups = [paths]
     groups = find_candidates(groups, os.path.getsize)
     groups = find_candidates(groups, lambda path: func(path, size=1024))

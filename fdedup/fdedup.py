@@ -92,10 +92,10 @@ def main():
     if opts.verbose == 1:
         log_level = logging.INFO
     elif opts.verbose > 1:
-        log_level = log_level.DEBUG
+        log_level = logging.DEBUG
 
     if opts.quiet:
-        log_level = log_level.ERROR
+        log_level = logging.ERROR
 
     logging.basicConfig(level=log_level,
                         format='%(asctime)s %(levelname)s: %(message)s',

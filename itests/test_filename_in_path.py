@@ -40,7 +40,7 @@ class Test(unittest.TestCase):
     def assertEqualNormalized(self, expected, actual):
         self.assertEqual(normalize(expected), normalize(actual))
 
-    def test_filenames_in_path(self):
+    def test(self):
         for test in tests:
             pipe = subprocess.Popen(test['args'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             out, err = pipe.communicate()

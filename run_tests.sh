@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH=$WORKSPACE/venv/bin:/usr/local/bin:$PATH
+PATH="$WORKSPACE/venv/bin:/usr/local/bin:$PATH"
 
 rm -rf venv
 virtualenv venv

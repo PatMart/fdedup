@@ -4,3 +4,5 @@ pylint
 nose==1.3.4
 coverage
 memory-profiler
+nosexcover
+pep8

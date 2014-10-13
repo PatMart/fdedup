@@ -7,11 +7,11 @@ if ! type virtualenv &>/dev/null; then
   exit 1
 fi
 
-virtualenv venv
+virtualenv -q venv
 
 . ./venv/bin/activate
 
-pip install -r test-requirements.txt
+pip install -q -r test-requirements.txt
 nosetests -v --with-xunit --all-modules --traverse-namespace --cover-xml \
         --with-xcoverage  --cover-package=$PACKAGE --cover-inclusive --cover-erase
 coverage html

@@ -2,6 +2,11 @@
 
 PACKAGE=fdedup
 
+if ! which -q virtualenv; then
+  echo "ERROR: can't find virtualenv. Have you installed it?"
+  exit 1
+fi
+
 virtualenv venv
 
 . ./venv/bin/activate

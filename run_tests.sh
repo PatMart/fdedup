@@ -6,7 +6,9 @@ if [ ! -d "venv" ]; then
 fi
 . venv/bin/activate
 
-pip install -r requirements.txt --download-cache=/tmp/$JOB_NAME
+pip install nosexcover
+pip install nose
+pip install coverage
 nosetests -v --with-xunit --all-modules --traverse-namespace --cover-xml --with-xcoverage  --cover-package=fdedup --cover-inclusive --cover-erase
 
 if [ -d "venv" ]; then

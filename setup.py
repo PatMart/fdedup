@@ -16,7 +16,7 @@ setup(
     packages=['fdedup'],  # this must be the same as the name above
     version=get_version('fdedup/__init__.py'),
     description='File Deduplicator',
-    author='Alexandr Krasnukhin, Alexey Ulyanov',
+    author='Alexander Krasnukhin, Alexey Ulyanov',
     author_email='the.malkom@gmail.com, sibuser.nsk@gmail.com',
     url='https://github.com/themalkolm/fdedup',
     download_url='https://github.com/themalkolm/fdedup',

@@ -2,7 +2,7 @@
 
 PACKAGE=fdedup
 
-if ! which -q virtualenv; then
+if ! type virtualenv &>/dev/null; then
   echo "ERROR: can't find virtualenv. Have you installed it?"
   exit 1
 fi

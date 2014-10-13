@@ -1,6 +1,5 @@
 #!/bin/sh
 
-rm -rf venv
 virtualenv venv
 
 . ./venv/bin/activate

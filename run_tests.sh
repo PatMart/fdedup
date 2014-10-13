@@ -3,7 +3,7 @@
 rm -rf venv
 virtualenv venv
 
-. venv/bin/activate
+. ./venv/bin/activate
 
 pip install -r test-requirements.txt
 nosetests -v --with-xunit --all-modules --traverse-namespace --cover-xml \

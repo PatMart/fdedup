@@ -9,8 +9,9 @@ fi
 pip install nosexcover
 pip install nose
 pip install coverage
-nosetests -v --with-xunit --all-modules --traverse-namespace --cover-xml --with-xcoverage  --cover-package=fdedup --cover-inclusive --cover-erase
-
+nosetests -v --with-xunit --all-modules --traverse-namespace --cover-xml \
+        --with-xcoverage  --cover-package=fdedup --cover-inclusive --cover-erase
+coverage html
 if [ -d "venv" ]; then
         rm -rf venv
 fi

@@ -1,10 +1,10 @@
 #!/bin/sh
 
 PATH=$WORKSPACE/venv/bin:/usr/local/bin:$PATH
-if [ -d "venv" ]; then
-    rm -rf venv
-fi
+
+rm -rf venv
 virtualenv venv
+
 . venv/bin/activate
 
 pip install -r test-requirements.txt

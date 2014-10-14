@@ -16,7 +16,10 @@ def iterate_files(root):
     if os.path.isfile(root):
         yield root
 
-    for path, _, files in os.walk(root):
+    def onerror(err):
+        logging.error('%s : %s', err.filename, err.strerror)
+
+    for path, _, files in os.walk(root, onerror=onerror):
         for f in files:
             yield os.path.join(path, f)
 

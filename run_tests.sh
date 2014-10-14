@@ -8,7 +8,7 @@ if ! type virtualenv &>/dev/null; then
 fi
 
 echo "Setting up virtualenv ..."
-virtualenv -q venv2
+virtualenv -q venv
 
 echo "Activating virtualenv ..."
 . ./venv/bin/activate

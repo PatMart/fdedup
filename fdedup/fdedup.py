@@ -83,8 +83,10 @@ def file_hash(algorithm, path, size=-1, chunk_size=65536):
 
 def verify_paths(paths):
     for path in paths:
-        if not os.path.exists(path):
-            logger.error('cannot stat \'%s\': No such file or directory', path)
+        try:
+            os.stat(path)
+        except IOError as e:
+            logger.error('cannot stat \'%s\': %s (%d)', path, e.strerror, e.errno)
             return False
     return True
 

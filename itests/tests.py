@@ -7,6 +7,7 @@ from StringIO import StringIO
 
 import config
 from fdedup import fdedup
+import testfixtures
 
 
 @contextmanager
@@ -25,20 +26,24 @@ def normalize(groups):
 
 
 def check(spec):
-    with capture_output() as (out, err):
-        try:
-            code = fdedup.main(spec['args'])
-            if code is None:
-                raise SystemExit(0)
-            assert False  # should never be here
-        except SystemExit as e:
-            assert spec['returncode'] == e.code
+    with testfixtures.LogCapture() as log:
+        with capture_output() as (out, err):
+            try:
+                code = fdedup.main(spec['args'])
+                if code is None:
+                    raise SystemExit(0)
+                assert False  # should never be here
+            except SystemExit as e:
+                assert spec['returncode'] == e.code
 
-        if 'stdout' in spec:
-            assert normalize(json.loads(spec['stdout'])) == normalize(json.loads(out.getvalue()))
+            if 'stdout' in spec:
+                assert normalize(json.loads(spec['stdout'])) == normalize(json.loads(out.getvalue()))
 
-        if 'stderr' in spec:
-            assert spec['stderr'] == err.getvalue()
+            if 'stderr' in spec:
+                assert spec['stderr'] == err.getvalue()
+
+            if 'stdlog' in spec:
+                log.check(spec['stdlog'])
 
 
 def test_specs():

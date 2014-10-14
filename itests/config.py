@@ -32,7 +32,8 @@ tests = [
     {
         'description': 'should return 22 whenever a non-existing path is provided',
         'args': ['moogoescow'],
-        'returncode': 22
+        'returncode': 22,
+        'stdlog': ('root', 'ERROR', 'cannot stat \'moogoescow\': No such file or directory')
     },
     {
         'args': ['--json', './static/chaplain', './static/chaplain.copy'],

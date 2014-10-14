@@ -93,16 +93,18 @@ def main(args=None):
     opts = parser.parse_args(args)
 
     log_level = logging.WARN
+    log_format = '%(message)s'
     if opts.verbose == 1:
         log_level = logging.INFO
     elif opts.verbose > 1:
+        log_format = '%(asctime)s %(levelname)s: %(message)s'
         log_level = logging.DEBUG
 
     if opts.quiet:
         log_level = logging.ERROR
 
     logging.basicConfig(level=log_level,
-                        format='%(asctime)s %(levelname)s: %(message)s',
+                        format=log_format,
                         datefmt='%m/%d/%Y %H:%M:%S')
 
     if not verify_paths(opts.paths):

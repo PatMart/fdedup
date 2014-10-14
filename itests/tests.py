@@ -25,17 +25,23 @@ def normalize(groups):
     return sorted(map(sorted, groups))
 
 
-class Test(unittest.TestCase):
-    def test(self):
-        for test in config.tests:
-            with capture_output() as (out, err):
-                with self.assertRaises(SystemExit) as e:
-                    code = fdedup.main(test['args'])
-                    if code is None:
-                        raise SystemExit(0)
-                    self.assertEqual(test['returncode'], e.exception.code)
-                if 'stdout' in test:
-                    self.assertEqual(normalize(json.loads(test['stdout'])),
-                                     normalize(json.loads(out.getvalue())))
-                if 'stderr' in test:
-                    self.assertEqual(test['stderr'], err.getvalue())
+def check(spec):
+    with capture_output() as (out, err):
+        try:
+            code = fdedup.main(spec['args'])
+            if code is None:
+                raise SystemExit(0)
+            assert False  # should never be here
+        except SystemExit as e:
+            assert spec['returncode'] == e.code
+
+        if 'stdout' in spec:
+            assert normalize(json.loads(spec['stdout'])) == normalize(json.loads(out.getvalue()))
+
+        if 'stderr' in spec:
+            assert spec['stderr'] == err.getvalue()
+
+
+def test_specs():
+    for spec in config.tests:
+        yield check, spec

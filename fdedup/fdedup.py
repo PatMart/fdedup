@@ -17,7 +17,7 @@ def iterate_files(root):
         yield root
 
     def onerror(err):
-        logging.error('%s : %s', err.filename, err.strerror)
+        logging.error('\'%s\' : %s', err.filename, err.strerror)
 
     for path, _, files in os.walk(root, onerror=onerror):
         for f in files:
@@ -73,7 +73,7 @@ def file_hash(algorithm, path, size=-1, chunk_size=65536):
 def verify_paths(paths):
     for path in paths:
         if not os.path.exists(path):
-            logging.error('No such file or directory: %s', path)
+            logging.error('cannot stat \'%s\': No such file or directory', path)
             return False
     return True
 

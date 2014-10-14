@@ -44,7 +44,7 @@ def find_candidates(groups, func):
                 group_candidates.setdefault(filehash, []).append(path)
         candidates.update(
             (item for item in group_candidates.iteritems() if len(item[1]) > 1))
-    return (v for v in candidates.itervalues() if len(v) > 1)
+    return (set(v) for v in candidates.itervalues() if len(v) > 1)
 
 
 def find_duplicates(paths, func):
@@ -124,8 +124,7 @@ def main(args=None):
     hash_func = functools.partial(file_hash, opts.hash)
     groups = find_duplicates(opts.paths, hash_func)
     if opts.json:
-        groups = list(groups)
-        print json.dumps(groups, indent=2)
+        print json.dumps([list(group) for group in groups], indent=2)
     else:
         for group in groups:
             print ''

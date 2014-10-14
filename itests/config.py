@@ -87,4 +87,13 @@ tests = [
         ]),
         'stdlog': [('fdedup', 'ERROR', '\'./static/issue_37/kawabanga\' : Permission denied (13)')],
     },
+    {
+        'description': 'should not duplicate duplicates if path is listed several times',
+        'args': ['--json', './static/empty', './static/empty', './static/empty', './static/empty.copy'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['./static/empty', './static/empty.copy']
+        ]),
+        'stdlog': None
+    }
 ]

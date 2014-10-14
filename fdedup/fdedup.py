@@ -39,7 +39,9 @@ def find_candidates(groups, func):
     for group in groups:
         group_candidates = {}
         for path in group:
-            group_candidates.setdefault(func(path), []).append(path)
+            filehash = func(path)
+            if filehash is not None:
+                group_candidates.setdefault(filehash, []).append(path)
         candidates.update(
             (item for item in group_candidates.iteritems() if len(item[1]) > 1))
     return (v for v in candidates.itervalues() if len(v) > 1)
@@ -63,15 +65,20 @@ def chunk_reader(fileobject, chunk_size):
 
 
 def file_hash(algorithm, path, size=-1, chunk_size=65536):
-    hasher = hashlib.new(algorithm)
-    with open(path, 'rb') as f:
-        read = 0
-        for chunk in chunk_reader(f, chunk_size):
-            read += len(chunk)
-            hasher.update(chunk)
-            if size != -1 and read >= size:
-                break
-    return hasher.hexdigest()
+    try:
+        hasher = hashlib.new(algorithm)
+        with open(path, 'rb') as f:
+            read = 0
+            for chunk in chunk_reader(f, chunk_size):
+                read += len(chunk)
+                hasher.update(chunk)
+                if size != -1 and read >= size:
+                    break
+        return hasher.hexdigest()
+
+    except IOError as e:
+        logger.error('\'%s\' : %s (%d)', path, e.strerror, e.errno)
+        return None
 
 
 def verify_paths(paths):

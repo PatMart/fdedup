@@ -93,11 +93,11 @@ def main(args=None):
     opts = parser.parse_args(args)
 
     log_level = logging.WARN
-    log_format = '%(message)s'
+    log_format = 'fdedup: %(message)s'
     if opts.verbose == 1:
         log_level = logging.INFO
     elif opts.verbose > 1:
-        log_format = '%(asctime)s %(levelname)s: %(message)s'
+        log_format = '[%(asctime)s %(levelname)s] fdedup: %(message)s'
         log_level = logging.DEBUG
 
     if opts.quiet:

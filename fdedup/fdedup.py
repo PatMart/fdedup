@@ -71,7 +71,8 @@ def verify_paths(paths):
     for path in paths:
         if not os.path.exists(path):
             logging.error('No such file or directory: %s', path)
-            sys.exit(22)
+            return False
+    return True
 
 
 def main(args=None):
@@ -101,7 +102,8 @@ def main(args=None):
                         format='%(asctime)s %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
 
-    verify_paths(opts.paths)
+    if not verify_paths(opts.paths):
+        sys.exit(22)
 
     hash_func = functools.partial(file_hash, opts.hash)
     groups = find_duplicates(opts.paths, hash_func)
@@ -113,6 +115,8 @@ def main(args=None):
             print ''
             for path in group:
                 print path
+
+    sys.exit(0)
 
 
 if __name__ == '__main__':

@@ -37,7 +37,7 @@ tests = [
         'args': ['moogoescow'],
         'returncode': 22,
         'stdout': None,
-        'stdlog': ('fdedup', 'ERROR', 'cannot stat \'moogoescow\': No such file or directory')
+        'stdlog': [('fdedup', 'ERROR', 'cannot stat \'moogoescow\': No such file or directory')]
     },
     {
         'args': ['--json', './static/chaplain', './static/chaplain.copy'],

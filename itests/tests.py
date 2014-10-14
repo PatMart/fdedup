@@ -46,7 +46,8 @@ def check(spec):
             if 'stdlog' in spec:
                 stdlog = spec['stdlog']
                 if stdlog:
-                    log.check(stdlog)
+                    for l in stdlog:
+                        log.check(l)
 
 
 def test_specs():

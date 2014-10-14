@@ -30,7 +30,9 @@ class Test(unittest.TestCase):
         for test in config.tests:
             with capture_output() as (out, err):
                 with self.assertRaises(SystemExit) as e:
-                    fdedup.main(test['args'])
+                    code = fdedup.main(test['args'])
+                    if code is None:
+                        raise SystemExit(0)
                     self.assertEqual(test['returncode'], e.exception.code)
                 if 'stdout' in test:
                     self.assertEqual(normalize(json.loads(test['stdout'])),

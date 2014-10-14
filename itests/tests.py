@@ -44,7 +44,9 @@ def check(spec):
                     assert not len(out.getvalue())
 
             if 'stdlog' in spec:
-                log.check(spec['stdlog'])
+                stdlog = spec['stdlog']
+                if stdlog:
+                    log.check(stdlog)
 
 
 def test_specs():

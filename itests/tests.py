@@ -44,5 +44,8 @@ def check(spec):
 def test_specs():
     for spec in config.tests:
         checker = lambda spec: check(spec)
-        checker.description = ' '.join(['fdedup'] + spec['args'])
+        if 'description' in spec:
+            checker.description = spec['description']
+        else:
+            checker.description = ' '.join(['fdedup'] + spec['args'])
         yield checker, spec

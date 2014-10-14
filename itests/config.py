@@ -4,15 +4,18 @@ import json
 
 tests = [
     {
+        'description': 'should fail and print usage by default',
         'args': [],
         'returncode': 2
     },
     {
+        'description': 'should print help with -h flag',
         'args': ['-h'],
         'returncode': 0,
         'stderr': ''
     },
     {
+        'description': 'should print help with --help flag',
         'args': ['--help'],
         'returncode': 0,
         'stderr': ''
@@ -22,10 +25,12 @@ tests = [
         'returncode': 0
     },
     {
+        'description': 'should return 22 whenever a non-existing path is provided mixed with existing',
         'args': ['./static', 'moogoescow'],
         'returncode': 22
     },
     {
+        'description': 'should return 22 whenever a non-existing path is provided',
         'args': ['moogoescow'],
         'returncode': 22
     },

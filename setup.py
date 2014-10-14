@@ -5,7 +5,7 @@ import re
 
 def get_version(filename):
     content = open(filename).read()
-    metadata = dict(re.findall("__([a-z]+)__ = '([^']+)'", content))
+    metadata = dict(re.findall("__(version)__ = '([^']+)'", content))
     return metadata['version']
 
 

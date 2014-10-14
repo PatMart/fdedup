@@ -82,7 +82,9 @@ tests = [
         'description': 'should complain if permission denied',
         'args': ['--json', './static/issue_37'],
         'returncode': 0,
-        'stdout': json.dumps([]),
+        'stdout': json.dumps([
+            ['./static/issue_37/kawabanga.copy', './static/issue_37/kawabanga.copy2']
+        ]),
         'stdlog': [('fdedup', 'ERROR', '\'./static/issue_37/kawabanga\' : Permission denied (13)')],
     },
 ]

@@ -22,6 +22,10 @@ tests = [
         'returncode': 0
     },
     {
+        'args': ['./static', 'moogoescow'],
+        'returncode': 22
+    },
+    {
         'args': ['moogoescow'],
         'returncode': 22
     },

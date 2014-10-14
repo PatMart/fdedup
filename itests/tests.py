@@ -21,33 +21,42 @@ def capture_output():
         sys.stdout, sys.stderr = old_out, old_err
 
 
+@contextmanager
+def fixture(spec):
+    try:
+        yield spec['setup']() if 'setup' in spec else None
+    finally:
+        spec['teardown']() if 'teardown' in spec else None
+
+
 def normalize(groups):
     return sorted(map(sorted, groups))
 
 
 def check(spec):
-    with testfixtures.LogCapture(names='fdedup') as log:
-        with capture_output() as (out, err):
-            try:
-                code = fdedup.main(spec['args'])
-                if code is None:
-                    raise SystemExit(0)
-                assert False  # should never be here
-            except SystemExit as e:
-                assert spec['returncode'] == e.code
+    with fixture(spec):
+        with testfixtures.LogCapture(names='fdedup') as log:
+            with capture_output() as (out, err):
+                try:
+                    code = fdedup.main(spec['args'])
+                    if code is None:
+                        raise SystemExit(0)
+                    assert False  # should never be here
+                except SystemExit as e:
+                    assert spec['returncode'] == e.code
 
-            if 'stdout' in spec:
-                stdout = spec['stdout']
-                if stdout:
-                    assert normalize(json.loads(stdout)) == normalize(json.loads(out.getvalue()))
-                else:
-                    assert not len(out.getvalue())
+                if 'stdout' in spec:
+                    stdout = spec['stdout']
+                    if stdout:
+                        assert normalize(json.loads(stdout)) == normalize(json.loads(out.getvalue()))
+                    else:
+                        assert not len(out.getvalue())
 
-            if 'stdlog' in spec:
-                stdlog = spec['stdlog']
-                if stdlog:
-                    for l in stdlog:
-                        log.check(l)
+                if 'stdlog' in spec:
+                    stdlog = spec['stdlog']
+                    if stdlog:
+                        for l in stdlog:
+                            log.check(l)
 
 
 def test_specs():

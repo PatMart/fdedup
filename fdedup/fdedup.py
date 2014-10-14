@@ -21,7 +21,7 @@ def iterate_files(root):
 
     def onerror(err):
         if err.errno != 20:  # 'Not a directory'
-            logger.error('\'%s\' : %s (%d)', err.filename, err.strerror, err.errno)
+            logger.error(err)
 
     for path, _, files in os.walk(root, onerror=onerror):
         for f in files:
@@ -77,7 +77,7 @@ def file_hash(algorithm, path, size=-1, chunk_size=65536):
         return hasher.hexdigest()
 
     except IOError as e:
-        logger.error('\'%s\' : %s (%d)', path, e.strerror, e.errno)
+        logger.error(e)
         return None
 
 
@@ -85,8 +85,8 @@ def verify_paths(paths):
     for path in paths:
         try:
             os.stat(path)
-        except IOError as e:
-            logger.error('cannot stat \'%s\': %s (%d)', path, e.strerror, e.errno)
+        except OSError as e:
+            logger.error(e)
             return False
     return True
 

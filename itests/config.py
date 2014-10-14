@@ -38,7 +38,7 @@ tests = [
         'args': ['moogoescow'],
         'returncode': 22,
         'stdout': None,
-        'stdlog': [('fdedup', 'ERROR', 'cannot stat \'moogoescow\': No such file or directory')]
+        'stdlog': [('fdedup', 'ERROR', '[Errno 2] No such file or directory: \'moogoescow\'')]
     },
     {
         'args': ['--json', 'static/chaplain', 'static/chaplain.copy'],
@@ -85,7 +85,7 @@ tests = [
         'stdout': json.dumps([
             ['static/issue_37/kawabanga.copy', 'static/issue_37/kawabanga.copy2']
         ]),
-        'stdlog': [('fdedup', 'ERROR', '\'static/issue_37/kawabanga\' : Permission denied (13)')],
+        'stdlog': [('fdedup', 'ERROR', '[Errno 13] Permission denied: \'static/issue_37/kawabanga\'')],
     },
     {
         'description': 'should not duplicate duplicates if path is listed several times',

@@ -4,6 +4,10 @@ import json
 
 tests = [
     {
+        'args': [],
+        'returncode': 2
+    },
+    {
         'args': ['-h'],
         'returncode': 0,
         'stderr': ''
@@ -12,10 +16,6 @@ tests = [
         'args': ['--help'],
         'returncode': 0,
         'stderr': ''
-    },
-    {
-        'args': [],
-        'returncode': 2
     },
     {
         'args': ['./static'],

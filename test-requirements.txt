@@ -1,6 +1,1 @@
-pylint
-nose
-nosexcover
-pep8
-coverage
-testfixtures
+tox

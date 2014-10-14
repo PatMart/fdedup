@@ -8,17 +8,13 @@ if ! type virtualenv &>/dev/null; then
 fi
 
 echo "Setting up virtualenv ..."
-virtualenv -q venv
+virtualenv -q venv2
 
 echo "Activating virtualenv ..."
 . ./venv/bin/activate
 
 echo "Installing requirements ..."
-pip install -q -r test-requirements.txt
+pip install -q tox
 
 echo "Running unittests ..."
-nosetests -v --with-xunit --all-modules --traverse-namespace --cover-xml \
-        --with-xcoverage  --cover-package=$PACKAGE --cover-inclusive --cover-erase
-
-echo "Generating coverage report ..."
-coverage html
+tox

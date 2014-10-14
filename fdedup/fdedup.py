@@ -20,7 +20,7 @@ def iterate_files(root):
         yield root
 
     def onerror(err):
-        if err.errno != 20: # 'Not a directory'
+        if err.errno != 20:  # 'Not a directory'
             logger.error('\'%s\' : %s (%d)', err.filename, err.strerror, err.errno)
 
     for path, _, files in os.walk(root, onerror=onerror):

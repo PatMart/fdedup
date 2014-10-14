@@ -25,12 +25,14 @@ tests = [
     {
         'description': 'should return 22 whenever a non-existing path is provided mixed with existing',
         'args': ['./static', 'moogoescow'],
+        'stdout': None,
         'returncode': 22
     },
     {
         'description': 'should return 22 whenever a non-existing path is provided',
         'args': ['moogoescow'],
         'returncode': 22,
+        'stdout': None,
         'stdlog': ('fdedup', 'ERROR', 'cannot stat \'moogoescow\': No such file or directory')
     },
     {

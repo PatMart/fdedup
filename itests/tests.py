@@ -43,4 +43,6 @@ def check(spec):
 
 def test_specs():
     for spec in config.tests:
-        yield check, spec
+        checker = lambda spec: check(spec)
+        checker.description = ' '.join(['fdedup'] + spec['args'])
+        yield checker, spec

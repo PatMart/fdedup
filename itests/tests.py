@@ -2,7 +2,6 @@
 
 from contextlib import contextmanager
 import json
-import unittest
 import sys
 from StringIO import StringIO
 

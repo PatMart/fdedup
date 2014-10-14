@@ -1,10 +1,24 @@
 # -*- coding: utf-8 -*-
 
+from contextlib import contextmanager
 import json
-
 import unittest
-import subprocess
+import sys
+from StringIO import StringIO
+
 import config
+from fdedup import fdedup
+
+
+@contextmanager
+def capture_output():
+    new_out, new_err = StringIO(), StringIO()
+    old_out, old_err = sys.stdout, sys.stderr
+    try:
+        sys.stdout, sys.stderr = new_out, new_err
+        yield sys.stdout, sys.stderr
+    finally:
+        sys.stdout, sys.stderr = old_out, old_err
 
 
 def normalize(groups):
@@ -12,15 +26,14 @@ def normalize(groups):
 
 
 class Test(unittest.TestCase):
-    def assertEqualNormalized(self, expected, actual):
-        self.assertEqual(normalize(expected), normalize(actual))
-
     def test(self):
         for test in config.tests:
-            pipe = subprocess.Popen(test['args'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            out, err = pipe.communicate()
-            self.assertEqual(test['returncode'], pipe.returncode)
-            if 'stdout' in test:
-                self.assertEqualNormalized(json.loads(test['stdout']), json.loads(out))
-            if 'stderr' in test:
-                self.assertEqual(test['stderr'], err)
+            with capture_output() as (out, err):
+                with self.assertRaises(SystemExit) as e:
+                    fdedup.main(test['args'])
+                    self.assertEqual(test['returncode'], e.exception.code)
+                if 'stdout' in test:
+                    self.assertEqual(normalize(json.loads(test['stdout'])),
+                                     normalize(json.loads(out.getvalue())))
+                if 'stderr' in test:
+                    self.assertEqual(test['stderr'], err.getvalue())

@@ -4,29 +4,29 @@ import json
 
 tests = [
     {
-        'args': ['./fdedup/fdedup.py', '-h'],
+        'args': ['-h'],
         'returncode': 0,
         'stderr': ''
     },
     {
-        'args': ['./fdedup/fdedup.py', '--help'],
+        'args': ['--help'],
         'returncode': 0,
         'stderr': ''
     },
     {
-        'args': ['./fdedup/fdedup.py'],
+        'args': [],
         'returncode': 2
     },
     {
-        'args': ['./fdedup/fdedup.py', './static'],
+        'args': ['./static'],
         'returncode': 0
     },
     {
-        'args': ['./fdedup/fdedup.py', 'moogoescow'],
+        'args': ['moogoescow'],
         'returncode': 22
     },
     {
-        'args': ['./fdedup/fdedup.py', '--json', './static/chaplain', './static/chaplain.copy'],
+        'args': ['--json', './static/chaplain', './static/chaplain.copy'],
         'returncode': 0,
         'stdout': json.dumps([
             ['./static/chaplain', './static/chaplain.copy']
@@ -34,13 +34,13 @@ tests = [
         'stderr': ''
     },
     {
-        'args': ['./fdedup/fdedup.py', '--json', './static/chaplain', './static/chaplain.modified'],
+        'args': ['--json', './static/chaplain', './static/chaplain.modified'],
         'returncode': 0,
         'stdout': json.dumps([]),
         'stderr': ''
     },
     {
-        'args': ['./fdedup/fdedup.py', '--json', './static/chaplain', './static/chaplain.copy', './static/chaplain.modified'],
+        'args': ['--json', './static/chaplain', './static/chaplain.copy', './static/chaplain.modified'],
         'returncode': 0,
         'stdout': json.dumps([
             ['./static/chaplain', './static/chaplain.copy']
@@ -48,13 +48,13 @@ tests = [
         'stderr': ''
     },
     {
-        'args': ['./fdedup/fdedup.py', '--json', './static/issue_9/ydg2DF', './static/issue_9/A2VcHL'],
+        'args': ['--json', './static/issue_9/ydg2DF', './static/issue_9/A2VcHL'],
         'returncode': 0,
         'stdout': json.dumps([]),
         'stderr': ''
     },
     {
-        'args': ['./fdedup/fdedup.py', '--json', './static/empty', './static/empty.copy'],
+        'args': ['--json', './static/empty', './static/empty.copy'],
         'returncode': 0,
         'stdout': json.dumps([
             ['./static/empty', './static/empty.copy']

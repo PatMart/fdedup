@@ -43,7 +43,7 @@ def check(spec):
 
 def test_specs():
     for spec in config.tests:
-        checker = lambda spec: check(spec)
+        checker = lambda x: check(x)
         if 'description' in spec:
             checker.description = spec['description']
         else:

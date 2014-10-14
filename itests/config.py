@@ -41,58 +41,67 @@ tests = [
         'stdlog': [('fdedup', 'ERROR', 'cannot stat \'moogoescow\': No such file or directory')]
     },
     {
-        'args': ['--json', './static/chaplain', './static/chaplain.copy'],
+        'args': ['--json', 'static/chaplain', 'static/chaplain.copy'],
         'returncode': 0,
         'stdout': json.dumps([
-            ['./static/chaplain', './static/chaplain.copy']
+            ['static/chaplain', 'static/chaplain.copy']
         ]),
         'stdlog': None,
     },
     {
-        'args': ['--json', './static/chaplain', './static/chaplain.modified'],
+        'args': ['--json', 'static/chaplain', 'static/chaplain.modified'],
         'returncode': 0,
         'stdout': json.dumps([]),
         'stdlog': None,
     },
     {
-        'args': ['--json', './static/chaplain', './static/chaplain.copy', './static/chaplain.modified'],
+        'args': ['--json', 'static/chaplain', 'static/chaplain.copy', 'static/chaplain.modified'],
         'returncode': 0,
         'stdout': json.dumps([
-            ['./static/chaplain', './static/chaplain.copy']
+            ['static/chaplain', 'static/chaplain.copy']
         ]),
         'stdlog': None,
     },
     {
-        'args': ['--json', './static/issue_9/ydg2DF', './static/issue_9/A2VcHL'],
+        'args': ['--json', 'static/issue_9/ydg2DF', 'static/issue_9/A2VcHL'],
         'returncode': 0,
         'stdout': json.dumps([]),
         'stdlog': None,
     },
     {
-        'args': ['--json', './static/empty', './static/empty.copy'],
+        'args': ['--json', 'static/empty', 'static/empty.copy'],
         'returncode': 0,
         'stdout': json.dumps([
-            ['./static/empty', './static/empty.copy']
+            ['static/empty', 'static/empty.copy']
         ]),
         'stdlog': None,
     },
     {
-        'setup': lambda: os.chmod('./static/issue_37/kawabanga', 0000),
-        'teardown': lambda: os.chmod('./static/issue_37/kawabanga', 0644),
+        'setup': lambda: os.chmod('static/issue_37/kawabanga', 0000),
+        'teardown': lambda: os.chmod('static/issue_37/kawabanga', 0644),
         'description': 'should complain if permission denied',
-        'args': ['--json', './static/issue_37'],
+        'args': ['--json', 'static/issue_37'],
         'returncode': 0,
         'stdout': json.dumps([
-            ['./static/issue_37/kawabanga.copy', './static/issue_37/kawabanga.copy2']
+            ['static/issue_37/kawabanga.copy', 'static/issue_37/kawabanga.copy2']
         ]),
-        'stdlog': [('fdedup', 'ERROR', '\'./static/issue_37/kawabanga\' : Permission denied (13)')],
+        'stdlog': [('fdedup', 'ERROR', '\'static/issue_37/kawabanga\' : Permission denied (13)')],
     },
     {
         'description': 'should not duplicate duplicates if path is listed several times',
-        'args': ['--json', './static/empty', './static/empty', './static/empty', './static/empty.copy'],
+        'args': ['--json', 'static/empty', 'static/empty', 'static/empty', 'static/empty.copy'],
         'returncode': 0,
         'stdout': json.dumps([
-            ['./static/empty', './static/empty.copy']
+            ['static/empty', 'static/empty.copy']
+        ]),
+        'stdlog': None
+    },
+    {
+        'description': 'should work on normalized paths and understand redundant separators',
+        'args': ['--json', 'static/empty', './static/empty', '././static/empty', './static/issue_37/../empty', './static/empty.copy'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/empty', 'static/empty.copy']
         ]),
         'stdlog': None
     }

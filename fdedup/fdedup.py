@@ -17,7 +17,7 @@ logger = logging.getLogger('fdedup')
 
 def iterate_files(root):
     if os.path.isfile(root):
-        yield root
+        yield os.path.normpath(root)
 
     def onerror(err):
         if err.errno != 20:  # 'Not a directory'
@@ -25,7 +25,7 @@ def iterate_files(root):
 
     for path, _, files in os.walk(root, onerror=onerror):
         for f in files:
-            yield os.path.join(path, f)
+            yield os.path.normpath(os.path.join(path, f))
 
 
 def iterate_paths(paths):

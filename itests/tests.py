@@ -26,7 +26,7 @@ def normalize(groups):
 
 
 def check(spec):
-    with testfixtures.LogCapture() as log:
+    with testfixtures.LogCapture(names='fdedup') as log:
         with capture_output() as (out, err):
             try:
                 code = fdedup.main(spec['args'])

@@ -12,6 +12,9 @@ import os
 import sys
 
 
+logger = logging.getLogger('fdedup')
+
+
 def iterate_files(root):
     if os.path.isfile(root):
         yield root
@@ -74,7 +77,7 @@ def file_hash(algorithm, path, size=-1, chunk_size=65536):
 def verify_paths(paths):
     for path in paths:
         if not os.path.exists(path):
-            logging.error('cannot stat \'%s\': No such file or directory', path)
+            logger.error('cannot stat \'%s\': No such file or directory', path)
             return False
     return True
 
@@ -93,20 +96,20 @@ def main(args=None):
     parser.add_argument('--json', action='store_true', help='report in json')
     opts = parser.parse_args(args)
 
-    log_level = logging.WARN
+    logger.level = logging.WARN
     log_format = '%(name)s: %(message)s'
     if opts.verbose == 1:
-        log_level = logging.INFO
+        logger.level = logging.INFO
     elif opts.verbose > 1:
         log_format = '[%(asctime)s %(levelname)s] %(name)s: %(message)s'
-        log_level = logging.DEBUG
+        logger.level = logging.DEBUG
 
     if opts.quiet:
-        log_level = logging.ERROR
+        logger.level = logging.ERROR
 
-    logging.basicConfig(level=log_level,
-                        format=log_format,
-                        datefmt='%m/%d/%Y %H:%M:%S')
+    handler = logging.StreamHandler()
+    handler.setFormatter(logging.Formatter(log_format, '%m/%d/%Y %H:%M:%S'))
+    logger.addHandler(handler)
 
     if not verify_paths(opts.paths):
         sys.exit(22)

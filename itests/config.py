@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
+import os
 
 tests = [
     {
@@ -74,5 +75,14 @@ tests = [
             ['./static/empty', './static/empty.copy']
         ]),
         'stdlog': None,
+    },
+    {
+        'setup': lambda: os.chmod('./static/issue_37/kawabanga', 0000),
+        'teardown': lambda: os.chmod('./static/issue_37/kawabanga', 0644),
+        'description': 'should complain if permission denied',
+        'args': ['--json', './static/issue_37'],
+        'returncode': 0,
+        'stdout': json.dumps([]),
+        'stdlog': [('fdedup', 'ERROR', '\'./static/issue_37/kawabanga\' : Permission denied (13)')],
     },
 ]

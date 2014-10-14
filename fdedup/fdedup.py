@@ -74,7 +74,7 @@ def verify_paths(paths):
             sys.exit(22)
 
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -86,7 +86,7 @@ def main():
 
     parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     parser.add_argument('--json', action='store_true', help='report in json')
-    opts = parser.parse_args()
+    opts = parser.parse_args(args)
 
     log_level = logging.WARN
     if opts.verbose == 1:

@@ -37,10 +37,11 @@ def check(spec):
                 assert spec['returncode'] == e.code
 
             if 'stdout' in spec:
-                assert normalize(json.loads(spec['stdout'])) == normalize(json.loads(out.getvalue()))
-
-            if 'stderr' in spec:
-                assert spec['stderr'] == err.getvalue()
+                stdout = spec['stdout']
+                if stdout:
+                    assert normalize(json.loads(stdout)) == normalize(json.loads(out.getvalue()))
+                else:
+                    assert not len(out.getvalue())
 
             if 'stdlog' in spec:
                 log.check(spec['stdlog'])

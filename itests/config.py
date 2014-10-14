@@ -12,13 +12,11 @@ tests = [
         'description': 'should print help with -h flag',
         'args': ['-h'],
         'returncode': 0,
-        'stderr': ''
     },
     {
         'description': 'should print help with --help flag',
         'args': ['--help'],
         'returncode': 0,
-        'stderr': ''
     },
     {
         'args': ['./static'],
@@ -41,13 +39,11 @@ tests = [
         'stdout': json.dumps([
             ['./static/chaplain', './static/chaplain.copy']
         ]),
-        'stderr': ''
     },
     {
         'args': ['--json', './static/chaplain', './static/chaplain.modified'],
         'returncode': 0,
         'stdout': json.dumps([]),
-        'stderr': ''
     },
     {
         'args': ['--json', './static/chaplain', './static/chaplain.copy', './static/chaplain.modified'],
@@ -55,13 +51,11 @@ tests = [
         'stdout': json.dumps([
             ['./static/chaplain', './static/chaplain.copy']
         ]),
-        'stderr': ''
     },
     {
         'args': ['--json', './static/issue_9/ydg2DF', './static/issue_9/A2VcHL'],
         'returncode': 0,
         'stdout': json.dumps([]),
-        'stderr': ''
     },
     {
         'args': ['--json', './static/empty', './static/empty.copy'],
@@ -69,6 +63,5 @@ tests = [
         'stdout': json.dumps([
             ['./static/empty', './static/empty.copy']
         ]),
-        'stderr': ''
     },
 ]

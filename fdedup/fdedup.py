@@ -71,10 +71,11 @@ def verify_paths(paths):
     for path in paths:
         if not os.path.exists(path):
             logging.error('No such file or directory: %s', path)
-            sys.exit(22)
+            return False
+    return True
 
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -86,7 +87,7 @@ def main():
 
     parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     parser.add_argument('--json', action='store_true', help='report in json')
-    opts = parser.parse_args()
+    opts = parser.parse_args(args)
 
     log_level = logging.WARN
     if opts.verbose == 1:
@@ -101,7 +102,8 @@ def main():
                         format='%(asctime)s %(levelname)s: %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S')
 
-    verify_paths(opts.paths)
+    if not verify_paths(opts.paths):
+        sys.exit(22)
 
     hash_func = functools.partial(file_hash, opts.hash)
     groups = find_duplicates(opts.paths, hash_func)
@@ -113,6 +115,8 @@ def main():
             print ''
             for path in group:
                 print path
+
+    sys.exit(0)
 
 
 if __name__ == '__main__':

@@ -10,10 +10,12 @@ def get_version(filename):
 
 
 from distutils.core import setup
+from setuptools import find_packages
 
 setup(
     name='fdedup',
-    packages=['fdedup'],  # this must be the same as the name above
+    packages=find_packages('fdedup', exclude=['static', 'tests', 'run_tests*',
+                                              'requirements*']),
     version=get_version('fdedup/__init__.py'),
     description='File Deduplicator',
     author='Alexander Krasnukhin, Alexey Ulyanov',

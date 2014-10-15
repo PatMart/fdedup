@@ -108,7 +108,30 @@ def verify_paths(paths):
     return True
 
 
+class LogCountHanlder(logging.Handler):
+    def __init__(self):
+        super(LogCountHanlder, self).__init__()
+        self._counter = {}
+
+    def emit(self, record):
+        for lvl in record.levelno, record.levelname:
+            if lvl not in self._counter:
+                self._counter[lvl] = 1
+            else:
+                self._counter[lvl] += 1
+
+    def count(self, lvl):
+        return self._counter[lvl] if lvl in self._counter else 0
+
+
 def main(args=None):
+    """
+    :param args:
+    :return: 0 if everything is OK
+             1 if something went wrong
+             2 if invalid usage
+             22 if non-existed paths are supplied
+    """
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -138,6 +161,9 @@ def main(args=None):
     handler.setFormatter(logging.Formatter(log_format, '%m/%d/%Y %H:%M:%S'))
     logger.addHandler(handler)
 
+    log_counter = LogCountHanlder()
+    logger.addHandler(log_counter)
+
     if not verify_paths(opts.paths):
         sys.exit(22)
 
@@ -151,6 +177,7 @@ def main(args=None):
             for path in group:
                 print path
 
+    return log_counter.count(logging.ERROR) > 0
 
 if __name__ == '__main__':
     main()

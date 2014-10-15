@@ -42,9 +42,7 @@ def check(spec):
             with capture_output() as (out, err):
                 try:
                     code = fdedup.main(spec['args'])
-                    if code is None:
-                        raise SystemExit(0)
-                    assert False  # should never be here
+                    raise SystemExit(code if code else 0)
                 except SystemExit as e:
                     assert spec['returncode'] == e.code
 

@@ -158,4 +158,14 @@ tests = [
             ('fdedup', 'ERROR', 'Hash collision detected: static/issue_16/hello, static/issue_16/erase')
         ],
     },
+    {
+        'description': 'should not affect true duplicates by verification',
+        'args': ['--verify', '--json', 'static/chaplain', 'static/chaplain.copy'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/chaplain', 'static/chaplain.copy']
+        ]),
+        'stderr': '',
+        'stdlog': None
+    },
 ]

@@ -109,6 +109,13 @@ def verify_paths(paths):
 
 
 def main(args=None):
+    """
+    :param args:
+    :return: 0 if everything is OK
+             1 if something went wrong
+             2 if invalid usage
+             22 if non-existed paths are supplied
+    """
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)

@@ -2,11 +2,13 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import filecmp
 import functools
 
 import hashlib
 import json
 import logging
+import itertools
 
 import os
 import sys
@@ -47,13 +49,27 @@ def find_candidates(groups, func):
     return (set(v) for v in candidates.itervalues() if len(v) > 1)
 
 
-def find_duplicates(paths, func):
+def find_duplicates(paths, func, verify=False):
     paths = (os.path.normpath(path) for path in paths)
     paths = iterate_paths(paths)
     groups = [paths]
     groups = find_candidates(groups, os.path.getsize)
     groups = find_candidates(groups, lambda path: func(path, size=1024))
     groups = find_candidates(groups, func)
+    if verify:
+        def cmp_files(filepaths):
+            return all(
+                itertools.starmap(
+                    lambda l, r: filecmp.cmp(l, r, shallow=False),
+                    itertools.combinations(filepaths, 2)))
+        groups_verified = []
+        for group in groups:
+            group = list(group)
+            if cmp_files(group):
+                groups_verified.append(group)
+            else:
+                logger.error('Hash collision detected: %s', ', '.join(group))
+        groups = groups_verified
     return groups
 
 
@@ -103,6 +119,7 @@ def main(args=None):
     verbosity.add_argument('-q', '--quiet', action='store_true', help='be quiet')
 
     parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
+    parser.add_argument('--verify', action='store_true', help='verify duplicates with binary diff')
     parser.add_argument('--json', action='store_true', help='report in json')
     opts = parser.parse_args(args)
 
@@ -125,7 +142,7 @@ def main(args=None):
         sys.exit(22)
 
     hash_func = functools.partial(file_hash, opts.hash)
-    groups = find_duplicates(opts.paths, hash_func)
+    groups = find_duplicates(opts.paths, hash_func, verify=opts.verify)
     if opts.json:
         print json.dumps([list(group) for group in groups], indent=2)
     else:

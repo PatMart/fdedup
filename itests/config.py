@@ -116,4 +116,22 @@ tests = [
         ]),
         'stdlog': None,
     },
+    {
+        'description': 'should incorrectly report duplicates on md5 collision',
+        'args': ['--hash', 'md5', '--json', 'static/issue_16'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/issue_16/hello', 'static/issue_16/erase']
+        ]),
+        'stdlog': None,
+    },
+    {
+        'description': 'should binary differentiate files with hash collision',
+        'args': ['--verify', '--hash', 'md5', '--json', 'static/issue_16'],
+        'returncode': 0,
+        'stdout': json.dumps([]),
+        'stdlog': [
+            ('fdedup', 'ERROR', 'Hash collision detected: static/issue_16/hello, static/issue_16/erase')
+        ],
+    },
 ]

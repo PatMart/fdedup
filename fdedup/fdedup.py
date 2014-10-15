@@ -132,7 +132,7 @@ def main(args=None):
         logger.level = logging.DEBUG
 
     if opts.quiet:
-        logger.level = logging.ERROR
+        logger.disabled = True
 
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter(log_format, '%m/%d/%Y %H:%M:%S'))

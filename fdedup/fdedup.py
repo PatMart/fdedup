@@ -17,7 +17,7 @@ logger = logging.getLogger('fdedup')
 
 def iterate_files(root):
     if os.path.isfile(root):
-        yield os.path.normpath(root)
+        yield root
 
     def onerror(err):
         if err.errno != 20:  # 'Not a directory'
@@ -25,7 +25,7 @@ def iterate_files(root):
 
     for path, _, files in os.walk(root, onerror=onerror):
         for f in files:
-            yield os.path.normpath(os.path.join(path, f))
+            yield os.path.join(path, f)
 
 
 def iterate_paths(paths):
@@ -48,6 +48,7 @@ def find_candidates(groups, func):
 
 
 def find_duplicates(paths, func):
+    paths = (os.path.normpath(path) for path in paths)
     paths = iterate_paths(paths)
     groups = [paths]
     groups = find_candidates(groups, os.path.getsize)

@@ -104,5 +104,16 @@ tests = [
             ['static/empty', 'static/empty.copy']
         ]),
         'stdlog': None
-    }
+    },
+    {
+        'setup': lambda: os.link('static/issue_26/quote', 'static/issue_26/quote.hardlink'),
+        'teardown': lambda: os.remove('static/issue_26/quote.hardlink'),
+        'description': 'should treat hardlinks as separate files',
+        'args': ['--json', 'static/issue_26'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/issue_26/quote', 'static/issue_26/quote.copy', 'static/issue_26/quote.hardlink']
+        ]),
+        'stdlog': None,
+    },
 ]

@@ -49,8 +49,8 @@ def check(spec):
                     stdout = spec['stdout']
                     if stdout:
                         assert normalize(json.loads(stdout)) == normalize(json.loads(out.getvalue()))
-                    else:
-                        assert not len(out.getvalue())
+                    else:  # empty stdout
+                        assert 0 == len(out.getvalue())
 
                 if 'stderr' in spec:
                     stderr = spec['stderr']

@@ -31,7 +31,9 @@ tests = [
         'args': ['./static', 'moogoescow'],
         'returncode': 22,
         'stdout': None,
-        'stdlog': None,
+        'stdlog': [
+            ('fdedup', 'ERROR', '[Errno 2] No such file or directory: \'moogoescow\'')
+        ],
     },
     {
         'description': 'should return 22 whenever a non-existing path is provided',

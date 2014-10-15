@@ -121,7 +121,7 @@ class LogCountHanlder(logging.Handler):
                 self._counter[lvl] += 1
 
     def count(self, lvl):
-        return self._counter[lvl] if lvl in self._counter else 0
+        return self._counter.get(lvl, 0)
 
 
 def main(args=None):

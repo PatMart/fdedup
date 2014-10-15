@@ -3,6 +3,16 @@
 import json
 import os
 
+# {
+#     'args':           required, list of strings,  args array
+#     'returncode':     required, int,              expected return code
+#     'setup':          optional, lambda,           callable for setup
+#     'teardown':       optional, lambda,           callable for teardown
+#     'description':    optional, string,           description sentence starting with 'should'
+#     'stdout':         optional, string,           expected stdout
+#     'stderr':         optional, string,           expected stderr
+#     'stdlog':         optional, list of 3-tuples, expected log statements
+# },
 tests = [
     {
         'description': 'should fail and print usage by default',

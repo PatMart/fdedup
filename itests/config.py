@@ -109,7 +109,7 @@ tests = [
         'teardown': lambda: os.chmod('static/issue_37/kawabanga', 0644),
         'description': 'should complain if permission denied',
         'args': ['--json', 'static/issue_37'],
-        'returncode': 0,
+        'returncode': 1,
         'stdout': json.dumps([
             ['static/issue_37/kawabanga.copy', 'static/issue_37/kawabanga.copy2']
         ]),
@@ -160,7 +160,7 @@ tests = [
     {
         'description': 'should binary differentiate files with hash collision',
         'args': ['--verify', '--hash', 'md5', '--json', 'static/issue_16'],
-        'returncode': 0,
+        'returncode': 1,
         'stdout': json.dumps([]),
         'stdlog': [
             ('fdedup', 'ERROR', 'Hash collision detected: static/issue_16/hello, static/issue_16/erase')

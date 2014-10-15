@@ -52,6 +52,13 @@ def check(spec):
                     else:
                         assert not len(out.getvalue())
 
+                if 'stderr' in spec:
+                    stderr = spec['stderr']
+                    if stderr:
+                        assert stderr == err.getvalue()
+                    else:  # empty stderr
+                        assert 0 == len(err.getvalue())
+
                 if 'stdlog' in spec:
                     stdlog = spec['stdlog']
                     if stdlog:

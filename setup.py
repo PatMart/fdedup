@@ -40,7 +40,7 @@ setup(
     classifiers=[
         'Intended Audience :: End Users/Desktop',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2'
+        'Programming Language :: Python :: 2.7'
     ],
     tests_require=['tox'],
     cmdclass={'test': Tox}

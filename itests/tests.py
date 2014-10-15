@@ -34,6 +34,9 @@ def normalize(groups):
 
 
 def check(spec):
+    assert 'args' in spec
+    assert 'returncode' in spec
+
     with fixture(spec):
         with testfixtures.LogCapture(names='fdedup') as log:
             with capture_output() as (out, err):

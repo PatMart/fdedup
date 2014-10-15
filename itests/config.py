@@ -56,6 +56,14 @@ tests = [
         'stdlog': [('fdedup', 'ERROR', '[Errno 2] No such file or directory: \'moogoescow\'')]
     },
     {
+        'description': 'should return 22 whenever a non-existing path is provided and quiet is set',
+        'args': ['--quiet', 'moogoescow'],
+        'returncode': 22,
+        'stdout': '',
+        'stderr': '',
+        'stdlog': None
+    },
+    {
         'args': ['--json', 'static/chaplain', 'static/chaplain.copy'],
         'returncode': 0,
         'stdout': json.dumps([

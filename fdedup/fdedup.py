@@ -49,11 +49,19 @@ def find_candidates(groups, func):
     return (set(v) for v in candidates.itervalues() if len(v) > 1)
 
 
-def find_duplicates(paths, func, verify=False):
+def file_size(path, empty_as_none=False):
+    size = os.path.getsize(path)
+    if empty_as_none:
+        return size if size else None
+    else:
+        return size
+
+
+def find_duplicates(paths, func, verify=False, ignore_empty=False):
     paths = (os.path.normpath(path) for path in paths)
     paths = iterate_paths(paths)
     groups = [paths]
-    groups = find_candidates(groups, os.path.getsize)
+    groups = find_candidates(groups, functools.partial(file_size, empty_as_none=ignore_empty))
     groups = find_candidates(groups, lambda path: func(path, size=1024))
     groups = find_candidates(groups, func)
     if verify:
@@ -141,6 +149,7 @@ def main(args=None):
     verbosity.add_argument('-v', '--verbose', action='count', default=0, help='be verbose')
     verbosity.add_argument('-q', '--quiet', action='store_true', help='be quiet')
 
+    parser.add_argument('--ignore-empty', action='store_true', help='ignore empty files')
     parser.add_argument('--hash', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     parser.add_argument('--verify', action='store_true', help='verify duplicates with binary diff')
     parser.add_argument('--json', action='store_true', help='report in json')
@@ -173,7 +182,7 @@ def main(args=None):
         sys.exit(22)
 
     hash_func = functools.partial(file_hash, opts.hash)
-    groups = find_duplicates(opts.paths, hash_func, verify=opts.verify)
+    groups = find_duplicates(opts.paths, hash_func, verify=opts.verify, ignore_empty=opts.ignore_empty)
     if opts.json:
         print json.dumps([list(group) for group in groups], indent=2)
     else:

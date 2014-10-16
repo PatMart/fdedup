@@ -96,11 +96,20 @@ tests = [
         'stdlog': None,
     },
     {
+        'description': 'should not ignore empty files by default',
         'args': ['--json', 'static/empty', 'static/empty.copy'],
         'returncode': 0,
         'stdout': json.dumps([
             ['static/empty', 'static/empty.copy']
         ]),
+        'stderr': '',
+        'stdlog': None,
+    },
+    {
+        'description': 'should ignore empty files if --ignore-empty is set',
+        'args': ['--ignore-empty', '--json', 'static/empty', 'static/empty.copy'],
+        'returncode': 0,
+        'stdout': json.dumps([]),
         'stderr': '',
         'stdlog': None,
     },

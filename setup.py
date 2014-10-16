@@ -38,6 +38,8 @@ setup(
     download_url='https://github.com/themalkolm/fdedup',
     keywords=['files', 'duplicates'],
     classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
         'Intended Audience :: End Users/Desktop',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7'

@@ -7,7 +7,7 @@ import testfixtures
 
 import config
 from fdedup import fdedup
-from itests.output_capture import OutputCapture
+from output_capture import OutputCapture
 
 
 @contextmanager

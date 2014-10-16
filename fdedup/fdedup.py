@@ -6,7 +6,6 @@ import filecmp
 import functools
 
 import hashlib
-import json
 import logging
 import itertools
 
@@ -182,6 +181,7 @@ def main(args=None):
     hash_func = functools.partial(file_hash, algorithm=opts.hash)
     groups = find_duplicates(opts.paths, hash_func, verify=opts.verify, ignore_empty=opts.ignore_empty)
     if opts.json:
+        import json
         print json.dumps([list(group) for group in groups], indent=2)
     else:
         first = True

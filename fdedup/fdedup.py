@@ -132,6 +132,18 @@ class LogCountHanlder(logging.Handler):
         return self._counter.get(lvl, 0)
 
 
+def read_paths():
+    """
+    Read paths from sys.stdin ignoring empty lines.
+
+    :return: iterator to read paths
+    """
+    for path in sys.stdin:
+        path = path.rstrip()  # drop \n
+        if path:  # skip empty lines
+            yield path
+
+
 def main(args=None):
     """
     :param args:
@@ -175,10 +187,7 @@ def main(args=None):
 
     if '-' in opts.paths:
         opts.paths.remove('-')
-        for path in sys.stdin:
-            path = path.rstrip()
-            if path:
-                opts.paths.append(path)
+        opts.paths.extend(read_paths())
 
     if not verify_paths(opts.paths):
         sys.exit(22)

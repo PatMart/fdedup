@@ -11,14 +11,14 @@ import testfixtures
 
 
 @contextmanager
-def capture_output():
-    new_out, new_err = StringIO(), StringIO()
-    old_out, old_err = sys.stdout, sys.stderr
+def capture_output(stdin):
+    new_in, new_out, new_err = StringIO(stdin), StringIO(), StringIO()
+    old_in, old_out, old_err = sys.stdin, sys.stdout, sys.stderr
     try:
-        sys.stdout, sys.stderr = new_out, new_err
-        yield sys.stdout, sys.stderr
+        sys.stdin, sys.stdout, sys.stderr = new_in, new_out, new_err
+        yield sys.stdin, sys.stdout, sys.stderr
     finally:
-        sys.stdout, sys.stderr = old_out, old_err
+        sys.stdin, sys.stdout, sys.stderr = old_in, old_out, old_err
 
 
 @contextmanager
@@ -36,10 +36,9 @@ def normalize(groups):
 def check(spec):
     assert 'args' in spec
     assert 'returncode' in spec
-
     with fixture(spec):
         with testfixtures.LogCapture(names='fdedup') as log:
-            with capture_output() as (out, err):
+            with capture_output(spec.get('stdin', '')) as (inn, out, err):
                 try:
                     code = fdedup.main(spec['args'])
                     raise SystemExit(code if code else 0)

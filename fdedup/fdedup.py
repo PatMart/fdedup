@@ -164,6 +164,11 @@ def main(args=None):
     log_counter = LogCountHanlder()
     logger.addHandler(log_counter)
 
+    if '-' in opts.paths:
+        opts.paths.remove('-')
+        for path in sys.stdin:
+            opts.paths.append(path.rstrip())
+
     if not verify_paths(opts.paths):
         sys.exit(22)
 

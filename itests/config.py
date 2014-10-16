@@ -176,4 +176,26 @@ tests = [
         'stderr': '',
         'stdlog': None
     },
+    {
+        'description': 'should take paths from stdin if requested',
+        'args': ['--json', '-'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/chaplain', 'static/chaplain.copy']
+        ]),
+        'stdin': '\n'.join(['static/chaplain', 'static/chaplain.copy']),
+        'stderr': '',
+        'stdlog': None
+    },
+    {
+        'description': 'should take paths from stdin if requested even mixed with filenames',
+        'args': ['--json', '-', 'static/bar/chaplain.copy2'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/chaplain', 'static/chaplain.copy', 'static/bar/chaplain.copy2']
+        ]),
+        'stdin': '\n'.join(['static/chaplain', 'static/chaplain.copy']),
+        'stderr': '',
+        'stdlog': None
+    },
 ]

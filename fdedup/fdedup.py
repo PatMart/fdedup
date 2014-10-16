@@ -38,17 +38,19 @@ def file_size(path, empty_as_none=False):
         return size
 
 
-def find_duplicates(paths, func, verify=False, ignore_empty=False):
+def find_duplicates(paths, algorithm='md5', verify=False, ignore_empty=False):
     def onerror(err):
         if err.errno != 20:  # 'Not a directory'
             logger.error(err)
+
+    hash_func = functools.partial(file_hash, algorithm=algorithm)
 
     paths = (os.path.normpath(path) for path in paths)
     paths = iterate_files(paths, onerror=onerror)
     groups = [paths]
     groups = find_candidates(groups, functools.partial(file_size, empty_as_none=ignore_empty))
-    groups = find_candidates(groups, lambda path: func(path, size=1024))
-    groups = find_candidates(groups, func)
+    groups = find_candidates(groups, lambda path: hash_func(path, size=1024))
+    groups = find_candidates(groups, hash_func)
     if verify:
         import filecmp
         def cmp_files(filepaths):
@@ -178,8 +180,7 @@ def main(args=None):
     if not verify_paths(opts.paths):
         sys.exit(22)
 
-    hash_func = functools.partial(file_hash, algorithm=opts.hash)
-    groups = find_duplicates(opts.paths, hash_func, verify=opts.verify, ignore_empty=opts.ignore_empty)
+    groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty, algorithm=opts.hash)
     if opts.json:
         import json
         print json.dumps([list(group) for group in groups], indent=2)

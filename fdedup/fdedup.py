@@ -102,9 +102,9 @@ def verify_paths(paths):
         os.stat(path)
 
 
-class LogCountHanlder(logging.Handler):
+class LogCountHandler(logging.Handler):
     def __init__(self):
-        super(LogCountHanlder, self).__init__()
+        super(LogCountHandler, self).__init__()
         self._counter = {}
 
     def emit(self, record):
@@ -167,7 +167,7 @@ def main(args=None):
     handler.setFormatter(logging.Formatter(log_format, '%m/%d/%Y %H:%M:%S'))
     logger.addHandler(handler)
 
-    log_counter = LogCountHanlder()
+    log_counter = LogCountHandler()
     logger.addHandler(log_counter)
 
     if '-' in opts.paths:

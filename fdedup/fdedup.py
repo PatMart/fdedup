@@ -134,7 +134,7 @@ def main(args=None):
 
     parser.add_argument('--ignore-empty', action='store_true', help='ignore empty files')
     parser.add_argument('--algorithm', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
-    parser.add_argument('--verify', action='store_true', help='verify duplicates with binary diff')
+    parser.add_argument('--verify', action='store_true', help='verify duplicates bytewise')
     parser.add_argument('--json', action='store_true', help='report in json')
     opts = parser.parse_args(args)
 

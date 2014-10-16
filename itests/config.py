@@ -9,6 +9,7 @@ import os
 #     'setup':          optional, lambda,           callable for setup
 #     'teardown':       optional, lambda,           callable for teardown
 #     'description':    optional, string,           description sentence starting with 'should'
+#     'stdin':          optional, string,           required input
 #     'stdout':         optional, string,           expected stdout
 #     'stderr':         optional, string,           expected stderr
 #     'stdlog':         optional, list of 3-tuples, expected log statements

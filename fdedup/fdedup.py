@@ -25,6 +25,7 @@ def find_candidates(groups, func):
             filehash = func(path)
             if filehash is not None:
                 group_candidates.setdefault(filehash, []).append(path)
+        # TODO(malkolm) Figure out if this doubles memory usage when len(groups) == 1
         candidates.update(
             (item for item in group_candidates.iteritems() if len(item[1]) > 1))
     return (set(v) for v in candidates.itervalues() if len(v) > 1)

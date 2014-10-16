@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import filecmp
 import functools
 
 import hashlib
@@ -51,6 +50,7 @@ def find_duplicates(paths, func, verify=False, ignore_empty=False):
     groups = find_candidates(groups, lambda path: func(path, size=1024))
     groups = find_candidates(groups, func)
     if verify:
+        import filecmp
         def cmp_files(filepaths):
             return all(
                 itertools.starmap(

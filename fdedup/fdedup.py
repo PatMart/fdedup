@@ -14,7 +14,7 @@ import os
 import sys
 
 
-logger = logging.getLogger('fdedup')
+logger = logging.getLogger(__package__)
 
 
 def iterate_files(root):

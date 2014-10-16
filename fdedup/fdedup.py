@@ -3,11 +3,9 @@
 
 import argparse
 import functools
-
 import hashlib
 import logging
 import itertools
-
 import os
 import sys
 
@@ -56,11 +54,13 @@ def find_duplicates(paths, algorithm='md5', verify=False, ignore_empty=False):
     groups = find_candidates(groups, hash_func)
     if verify:
         import filecmp
+
         def cmp_files(filepaths):
             return all(
                 itertools.starmap(
                     lambda l, r: filecmp.cmp(l, r, shallow=False),
                     itertools.combinations(filepaths, 2)))
+
         groups_verified = []
         for group in groups:
             group = list(group)
@@ -175,13 +175,15 @@ def main(args=None):
         opts.paths.extend(read_paths())
 
     try:
-        groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty, algorithm=opts.algorithm)
+        groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty,
+                                 algorithm=opts.algorithm)
     except Exception as e:
         logger.error(e)
         sys.exit(1)
 
     if opts.json:
         import json
+
         print json.dumps([list(group) for group in groups], indent=2)
     else:
         first = True
@@ -194,6 +196,7 @@ def main(args=None):
                 print path
 
     return log_counter.count(logging.ERROR) > 0
+
 
 if __name__ == '__main__':
     main()

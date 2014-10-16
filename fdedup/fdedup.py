@@ -13,27 +13,10 @@ import itertools
 import os
 import sys
 
+from iterate_files import iterate_files
+
 
 logger = logging.getLogger(__package__)
-
-
-def iterate_files(root):
-    if os.path.isfile(root):
-        yield root
-
-    def onerror(err):
-        if err.errno != 20:  # 'Not a directory'
-            logger.error(err)
-
-    for path, _, files in os.walk(root, onerror=onerror):
-        for f in files:
-            yield os.path.join(path, f)
-
-
-def iterate_paths(paths):
-    for path in paths:
-        for f in iterate_files(path):
-            yield f
 
 
 def find_candidates(groups, func):
@@ -58,8 +41,12 @@ def file_size(path, empty_as_none=False):
 
 
 def find_duplicates(paths, func, verify=False, ignore_empty=False):
+    def onerror(err):
+        if err.errno != 20:  # 'Not a directory'
+            logger.error(err)
+
     paths = (os.path.normpath(path) for path in paths)
-    paths = iterate_paths(paths)
+    paths = iterate_files(paths, onerror=onerror)
     groups = [paths]
     groups = find_candidates(groups, functools.partial(file_size, empty_as_none=ignore_empty))
     groups = find_candidates(groups, lambda path: func(path, size=1024))

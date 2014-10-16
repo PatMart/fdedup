@@ -159,7 +159,7 @@ tests = [
     },
     {
         'description': 'should incorrectly report duplicates on md5 collision',
-        'args': ['--hash', 'md5', '--json', 'static/issue_16'],
+        'args': ['--algorithm', 'md5', '--json', 'static/issue_16'],
         'returncode': 0,
         'stdout': json.dumps([
             ['static/issue_16/hello', 'static/issue_16/erase']
@@ -169,7 +169,7 @@ tests = [
     },
     {
         'description': 'should binary differentiate files with hash collision',
-        'args': ['--verify', '--hash', 'md5', '--json', 'static/issue_16'],
+        'args': ['--verify', '--algorithm', 'md5', '--json', 'static/issue_16'],
         'returncode': 1,
         'stdout': json.dumps([]),
         'stdlog': [

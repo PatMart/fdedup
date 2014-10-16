@@ -9,6 +9,8 @@ import itertools
 import os
 import sys
 
+from log_count_handler import LogCountHandler
+
 from iterate_files import iterate_files
 
 
@@ -100,22 +102,6 @@ def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
 def verify_paths(paths):
     for path in paths:
         os.stat(path)
-
-
-class LogCountHandler(logging.Handler):
-    def __init__(self):
-        super(LogCountHandler, self).__init__()
-        self._counter = {}
-
-    def emit(self, record):
-        for lvl in record.levelno, record.levelname:
-            if lvl not in self._counter:
-                self._counter[lvl] = 1
-            else:
-                self._counter[lvl] += 1
-
-    def count(self, lvl):
-        return self._counter.get(lvl, 0)
 
 
 def read_paths():

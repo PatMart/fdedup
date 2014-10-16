@@ -76,7 +76,7 @@ def find_duplicates(paths, func, verify=False, ignore_empty=False):
             if cmp_files(group):
                 groups_verified.append(group)
             else:
-                logger.error('Hash collision detected: %s', ', '.join(group))
+                logger.error('Hash collision detected: %s', ', '.join(sorted(group)))
         groups = groups_verified
     return groups
 

@@ -172,7 +172,7 @@ tests = [
         'returncode': 1,
         'stdout': json.dumps([]),
         'stdlog': [
-            ('fdedup', 'ERROR', 'Hash collision detected: static/issue_16/hello, static/issue_16/erase')
+            ('fdedup', 'ERROR', 'Hash collision detected: %s' % ', '.join(sorted(['static/issue_16/erase', 'static/issue_16/hello'])))
         ],
     },
     {

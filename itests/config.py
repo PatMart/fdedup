@@ -208,4 +208,15 @@ tests = [
         'stderr': '',
         'stdlog': None
     },
+    {
+        'description': 'should ignore empty lines from stdin',
+        'args': ['--json', '-'],
+        'returncode': 0,
+        'stdout': json.dumps([
+            ['static/chaplain', 'static/chaplain.copy']
+        ]),
+        'stdin': '\n'.join(['', 'static/chaplain', 'static/chaplain.copy']),
+        'stderr': '',
+        'stdlog': None
+    },
 ]

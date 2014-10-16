@@ -176,7 +176,9 @@ def main(args=None):
     if '-' in opts.paths:
         opts.paths.remove('-')
         for path in sys.stdin:
-            opts.paths.append(path.rstrip())
+            path = path.rstrip()
+            if path:
+                opts.paths.append(path)
 
     if not verify_paths(opts.paths):
         sys.exit(22)

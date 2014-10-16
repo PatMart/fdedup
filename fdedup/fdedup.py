@@ -186,8 +186,12 @@ def main(args=None):
     if opts.json:
         print json.dumps([list(group) for group in groups], indent=2)
     else:
+        first = True
         for group in groups:
-            print ''
+            if not first:
+                print ''
+            else:
+                first = False
             for path in group:
                 print path
 

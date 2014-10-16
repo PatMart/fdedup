@@ -39,6 +39,9 @@ def file_size(path, empty_as_none=False):
 
 
 def find_duplicates(paths, algorithm='md5', verify=False, ignore_empty=False):
+    if not verify_paths(paths):
+        sys.exit(22)
+
     def onerror(err):
         if err.errno != 20:  # 'Not a directory'
             logger.error(err)
@@ -176,9 +179,6 @@ def main(args=None):
     if '-' in opts.paths:
         opts.paths.remove('-')
         opts.paths.extend(read_paths())
-
-    if not verify_paths(opts.paths):
-        sys.exit(22)
 
     groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty, algorithm=opts.hash)
     if opts.json:

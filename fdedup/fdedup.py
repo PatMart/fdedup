@@ -89,7 +89,7 @@ def chunk_reader(fileobject, chunk_size):
         yield chunk
 
 
-def file_hash(algorithm, path, size=-1, chunk_size=65536):
+def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
     try:
         hasher = hashlib.new(algorithm)
         with open(path, 'rb') as f:
@@ -181,7 +181,7 @@ def main(args=None):
     if not verify_paths(opts.paths):
         sys.exit(22)
 
-    hash_func = functools.partial(file_hash, opts.hash)
+    hash_func = functools.partial(file_hash, algorithm=opts.hash)
     groups = find_duplicates(opts.paths, hash_func, verify=opts.verify, ignore_empty=opts.ignore_empty)
     if opts.json:
         print json.dumps([list(group) for group in groups], indent=2)

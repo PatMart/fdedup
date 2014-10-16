@@ -31,7 +31,7 @@ setup(
     packages=find_packages('fdedup', exclude=['static', 'tests', 'run_tests*',
                                               'requirements*']),
     version='0.0.3',
-    description='File Deduplicator',
+    description='Command line tool to find file duplicates.',
     author='Alexander Krasnukhin, Alexey Ulyanov',
     author_email='the.malkom@gmail.com, sibuser.nsk@gmail.com',
     url='https://github.com/themalkolm/fdedup',

@@ -39,8 +39,7 @@ def file_size(path, empty_as_none=False):
 
 
 def find_duplicates(paths, algorithm='md5', verify=False, ignore_empty=False):
-    if not verify_paths(paths):
-        sys.exit(22)
+    verify_paths(paths)
 
     def onerror(err):
         if err.errno != 20:  # 'Not a directory'
@@ -99,12 +98,7 @@ def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
 
 def verify_paths(paths):
     for path in paths:
-        try:
-            os.stat(path)
-        except OSError as e:
-            logger.error(e)
-            return False
-    return True
+        os.stat(path)
 
 
 class LogCountHanlder(logging.Handler):
@@ -141,7 +135,6 @@ def main(args=None):
     :return: 0 if everything is OK
              1 if something went wrong
              2 if invalid usage
-             22 if non-existed paths are supplied
     """
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',
@@ -180,7 +173,12 @@ def main(args=None):
         opts.paths.remove('-')
         opts.paths.extend(read_paths())
 
-    groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty, algorithm=opts.hash)
+    try:
+        groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty, algorithm=opts.hash)
+    except Exception as e:
+        logger.error(e)
+        sys.exit(1)
+
     if opts.json:
         import json
         print json.dumps([list(group) for group in groups], indent=2)

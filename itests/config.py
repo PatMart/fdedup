@@ -41,25 +41,25 @@ tests = [
         'stdlog': None,
     },
     {
-        'description': 'should return 22 whenever a non-existing path is provided mixed with existing',
+        'description': 'should return 1 whenever a non-existing path is provided mixed with existing',
         'args': ['./static', 'moogoescow'],
-        'returncode': 22,
+        'returncode': 1,
         'stdout': None,
         'stdlog': [
             ('fdedup', 'ERROR', '[Errno 2] No such file or directory: \'moogoescow\'')
         ],
     },
     {
-        'description': 'should return 22 whenever a non-existing path is provided',
+        'description': 'should return 1 whenever a non-existing path is provided',
         'args': ['moogoescow'],
-        'returncode': 22,
+        'returncode': 1,
         'stdout': None,
         'stdlog': [('fdedup', 'ERROR', '[Errno 2] No such file or directory: \'moogoescow\'')]
     },
     {
-        'description': 'should return 22 whenever a non-existing path is provided and quiet is set',
+        'description': 'should return 1 whenever a non-existing path is provided and quiet is set',
         'args': ['--quiet', 'moogoescow'],
-        'returncode': 22,
+        'returncode': 1,
         'stdout': '',
         'stderr': '',
         'stdlog': None

@@ -50,20 +50,17 @@ def get_tests():
             args=['-h'],
             returncode=0,
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             description='should print help with --help flag',
             args=['--help'],
             returncode=0,
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             args=['./static'],
             returncode=0,
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             description='should return 1 whenever a non-existing path is provided mixed with existing',
@@ -96,14 +93,12 @@ def get_tests():
                 ['static/chaplain', 'static/chaplain.copy']
             ]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             args=['--json', 'static/chaplain', 'static/chaplain.modified'],
             returncode=0,
             stdout=json.dumps([]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             args=['--json', 'static/chaplain', 'static/chaplain.copy', 'static/chaplain.modified'],
@@ -112,14 +107,12 @@ def get_tests():
                 ['static/chaplain', 'static/chaplain.copy']
             ]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             args=['--json', 'static/issue_9/ydg2DF', 'static/issue_9/A2VcHL'],
             returncode=0,
             stdout=json.dumps([]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             description='should not ignore empty files by default',
@@ -129,7 +122,6 @@ def get_tests():
                 ['static/empty', 'static/empty.copy']
             ]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             description='should ignore empty files if --ignore-empty is set',
@@ -137,7 +129,6 @@ def get_tests():
             returncode=0,
             stdout=json.dumps([]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             setup=lambda: os.chmod('static/issue_37/kawabanga', 0000),
@@ -181,7 +172,6 @@ def get_tests():
                 ['static/issue_26/quote', 'static/issue_26/quote.copy', 'static/issue_26/quote.hardlink']
             ]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             description='should incorrectly report duplicates on md5 collision',
@@ -191,7 +181,6 @@ def get_tests():
                 ['static/issue_16/hello', 'static/issue_16/erase']
             ]),
             stderr='',
-            stdlog=None,
         ),
         FdedupSpec(
             description='should binary differentiate files with hash collision',

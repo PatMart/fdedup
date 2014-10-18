@@ -37,10 +37,10 @@ def check(spec):
             testfixtures.compare(spec.returncode, e.code)
 
         if spec.stdout is not None:
-            if spec.stdout:
+            if spec.stdout_is_json:
                 testfixtures.compare(normalize(json.loads(spec.stdout)),
                                      normalize(json.loads(captured.out)))
-            else:  # empty stdout
+            else:
                 testfixtures.compare(0, len(captured.out))
 
         if spec.stderr is not None:

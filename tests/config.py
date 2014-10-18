@@ -34,8 +34,9 @@ class TestSpec(object):
 
 
 class FdedupSpec(TestSpec):
-    def __init__(self, args, returncode, *aargs, **kwargs):
+    def __init__(self, args, returncode, stdout_is_json=False, *aargs, **kwargs):
         super(FdedupSpec, self).__init__(fdedup.main, args, returncode, *aargs, **kwargs)
+        self.stdout_is_json = stdout_is_json
 
 
 def get_tests():
@@ -89,6 +90,7 @@ def get_tests():
         FdedupSpec(
             args=['--json', 'static/chaplain', 'static/chaplain.copy'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/chaplain', 'static/chaplain.copy']
             ]),
@@ -97,12 +99,14 @@ def get_tests():
         FdedupSpec(
             args=['--json', 'static/chaplain', 'static/chaplain.modified'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([]),
             stderr='',
         ),
         FdedupSpec(
             args=['--json', 'static/chaplain', 'static/chaplain.copy', 'static/chaplain.modified'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/chaplain', 'static/chaplain.copy']
             ]),
@@ -111,6 +115,7 @@ def get_tests():
         FdedupSpec(
             args=['--json', 'static/issue_9/ydg2DF', 'static/issue_9/A2VcHL'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([]),
             stderr='',
         ),
@@ -118,6 +123,7 @@ def get_tests():
             description='should not ignore empty files by default',
             args=['--json', 'static/empty', 'static/empty.copy'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/empty', 'static/empty.copy']
             ]),
@@ -127,6 +133,7 @@ def get_tests():
             description='should ignore empty files if --ignore-empty is set',
             args=['--ignore-empty', '--json', 'static/empty', 'static/empty.copy'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([]),
             stderr='',
         ),
@@ -136,6 +143,7 @@ def get_tests():
             description='should complain if permission denied',
             args=['--json', 'static/issue_37'],
             returncode=1,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/issue_37/kawabanga.copy', 'static/issue_37/kawabanga.copy2']
             ]),
@@ -145,6 +153,7 @@ def get_tests():
             description='should not duplicate duplicates if path is listed several times',
             args=['--json', 'static/empty', 'static/empty', 'static/empty', 'static/empty.copy'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/empty', 'static/empty.copy']
             ]),
@@ -156,6 +165,7 @@ def get_tests():
             args=['--json', 'static/empty', './static/empty', '././static/empty', './static/issue_37/../empty',
                   './static/empty.copy'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/empty', 'static/empty.copy']
             ]),
@@ -168,6 +178,7 @@ def get_tests():
             description='should treat hardlinks as separate files',
             args=['--json', 'static/issue_26'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/issue_26/quote', 'static/issue_26/quote.copy', 'static/issue_26/quote.hardlink']
             ]),
@@ -177,6 +188,7 @@ def get_tests():
             description='should incorrectly report duplicates on md5 collision',
             args=['--algorithm', 'md5', '--json', 'static/issue_16'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/issue_16/hello', 'static/issue_16/erase']
             ]),
@@ -186,6 +198,7 @@ def get_tests():
             description='should binary differentiate files with hash collision',
             args=['--verify', '--algorithm', 'md5', '--json', 'static/issue_16'],
             returncode=1,
+            stdout_is_json=True,
             stdout=json.dumps([]),
             stdlog=[
                 ('fdedup', 'ERROR',
@@ -196,6 +209,7 @@ def get_tests():
             description='should not affect true duplicates by verification',
             args=['--verify', '--json', 'static/chaplain', 'static/chaplain.copy'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/chaplain', 'static/chaplain.copy']
             ]),
@@ -206,6 +220,7 @@ def get_tests():
             description='should take paths from stdin if requested',
             args=['--json', '-'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/chaplain', 'static/chaplain.copy']
             ]),
@@ -217,6 +232,7 @@ def get_tests():
             description='should take paths from stdin if requested even mixed with filenames',
             args=['--json', '-', 'static/bar/chaplain.copy2'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/chaplain', 'static/chaplain.copy', 'static/bar/chaplain.copy2']
             ]),
@@ -228,6 +244,7 @@ def get_tests():
             description='should ignore empty lines from stdin',
             args=['--json', '-'],
             returncode=0,
+            stdout_is_json=True,
             stdout=json.dumps([
                 ['static/chaplain', 'static/chaplain.copy']
             ]),

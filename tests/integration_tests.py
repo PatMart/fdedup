@@ -43,10 +43,7 @@ def check(spec):
                 assert 0 == len(captured.out)
 
         if spec.stderr is not None:
-            if spec.stderr:
-                assert spec.stderr == captured.err
-            else:  # empty stderr
-                assert 0 == len(captured.err)
+            assert spec.stderr == captured.err
 
         if spec.stdlog is not None:
             for l in spec.stdlog:

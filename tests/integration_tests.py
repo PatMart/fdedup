@@ -3,7 +3,7 @@
 from contextlib import contextmanager
 import json
 
-from testfixtures import LogCapture
+import testfixtures
 
 import config
 from output_capture import OutputCapture
@@ -28,22 +28,23 @@ def check(spec):
             lognames.append(l[0])
 
     with fixture(spec), \
-            LogCapture(names=','.join(lognames)) as log, \
+            testfixtures.LogCapture(names=','.join(lognames)) as log, \
             OutputCapture(stdin=spec.stdin) as captured:
         try:
             code = spec.main(spec.args)
             raise SystemExit(code if code else 0)
         except SystemExit as e:
-            assert spec.returncode == e.code
+            testfixtures.compare(spec.returncode, e.code)
 
         if spec.stdout is not None:
             if spec.stdout:
-                assert normalize(json.loads(spec.stdout)) == normalize(json.loads(captured.out))
+                testfixtures.compare(normalize(json.loads(spec.stdout)),
+                                     normalize(json.loads(captured.out)))
             else:  # empty stdout
-                assert 0 == len(captured.out)
+                testfixtures.compare(0, len(captured.out))
 
         if spec.stderr is not None:
-            assert spec.stderr == captured.err
+            testfixtures.compare(spec.stderr, captured.err)
 
         if spec.stdlog is not None:
             for l in spec.stdlog:

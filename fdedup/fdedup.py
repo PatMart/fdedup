@@ -8,6 +8,7 @@ import logging
 import itertools
 import os
 import sys
+import collections
 
 from log_count_handler import LogCountHandler
 
@@ -53,11 +54,11 @@ def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
 def find_candidates(groups, func):
     candidates = {}
     for group in groups:
-        group_candidates = {}
+        group_candidates = collections.defaultdict(list)
         for path in group:
             filehash = func(path)
             if filehash is not None:
-                group_candidates.setdefault(filehash, []).append(path)
+                group_candidates[filehash].append(path)
         # TODO(malkolm) Figure out if this doubles memory usage when len(groups) == 1
         candidates.update(
             (item for item in group_candidates.iteritems() if len(item[1]) > 1))

@@ -52,7 +52,7 @@ def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
 
 
 def find_candidates(groups, func):
-    candidates = {}
+    candidates = collections.defaultdict(list)
     for group in groups:
         group_candidates = collections.defaultdict(list)
         for path in group:
@@ -60,8 +60,8 @@ def find_candidates(groups, func):
             if filehash is not None:
                 group_candidates[filehash].append(path)
         # TODO(malkolm) Figure out if this doubles memory usage when len(groups) == 1
-        candidates.update(
-            (item for item in group_candidates.iteritems() if len(item[1]) > 1))
+        for filehash, paths in (item for item in group_candidates.iteritems() if len(item[1]) > 1):
+            candidates[filehash].extend(paths)
     return (set(v) for v in candidates.itervalues() if len(v) > 1)
 
 

@@ -20,9 +20,12 @@ def iterate_files(paths, onerror=None):
     """
     Iterate over all files in the provided paths
 
-    :param paths: list of paths to iterate
-    :param onerror: onerror callback passed to os.walk
-    :return: iterator to all files
+    Args:
+        paths (list): list of paths to iterate
+        onerror: onerror callback passed to os.walk
+
+    Returns:
+        iterator to all files
     """
     for path in paths:
         for f in _iterate_files(path, onerror=onerror):

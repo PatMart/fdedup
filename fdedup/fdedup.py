@@ -109,7 +109,8 @@ def read_paths():
     """
     Read paths from sys.stdin ignoring empty lines.
 
-    :return: iterator to read paths
+    Returns:
+        iterator to read paths
     """
     for path in sys.stdin:
         path = path.rstrip()  # drop \n
@@ -119,10 +120,15 @@ def read_paths():
 
 def main(args=None):
     """
-    :param args:
-    :return: 0 if everything is OK
-             1 if something went wrong
-             2 if invalid usage
+    Args:
+        args (array): args
+
+    Returns:
+        int: The return code.
+
+        0 -- Success.
+        1 -- No good.
+        2 -- Invalid usage.
     """
     parser = argparse.ArgumentParser(
         description='Find file duplicates.',

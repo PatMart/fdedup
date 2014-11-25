@@ -30,7 +30,7 @@ setup(
     name='fdedup',
     packages=find_packages('fdedup', exclude=['static', 'tests', 'run_tests*',
                                               'requirements*']),
-    version='0.0.3',
+    version='0.0.4',
     description='Command line tool to find file duplicates.',
     author='Alexander Krasnukhin, Alexey Ulyanov',
     author_email='the.malkom@gmail.com, sibuser.nsk@gmail.com',

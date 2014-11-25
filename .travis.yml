@@ -1,0 +1,11 @@
+language: python
+python: 2.7
+env:
+  - TOX_ENV=pep8
+  - TOX_ENV=unittest
+  - TOX_ENV=coverage
+  - TOX_ENV=docs
+install:
+  - pip install tox
+script:
+  - tox -e $TOX_ENV

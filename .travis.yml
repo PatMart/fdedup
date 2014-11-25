@@ -6,6 +6,7 @@ env:
   - TOX_ENV=coverage
   - TOX_ENV=sdist
   - TOX_ENV=docs
+  - TOX_ENV=pyflakes
 install:
   - pip install tox
 script:

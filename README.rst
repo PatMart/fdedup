@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/themalkolm/fdedup.svg?branch=master
+    :target: https://travis-ci.org/themalkolm/fdedup
+
 fdedup (File DEDUPlicator)
 --------------------------
 

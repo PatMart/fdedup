@@ -4,6 +4,7 @@ env:
   - TOX_ENV=pep8
   - TOX_ENV=unittest
   - TOX_ENV=coverage
+  - TOX_ENV=sdist
   - TOX_ENV=docs
 install:
   - pip install tox

@@ -11,6 +11,13 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+API Reference
+-------------
+
+.. autosummary::
+   :toctree: api
+
+   fdedup
 
 
 Indices and tables

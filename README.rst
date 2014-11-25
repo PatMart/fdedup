@@ -6,6 +6,13 @@ fdedup (File DEDUPlicator)
 
 Find and list file duplicates in paths.
 
+Installation
+------------
+
+It can be installed with::
+
+  $ pip install --upgrade fdedup
+
 Getting Started
 ---------------
 

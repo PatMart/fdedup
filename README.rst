@@ -1,5 +1,11 @@
 .. image:: https://travis-ci.org/themalkolm/fdedup.svg?branch=master
     :target: https://travis-ci.org/themalkolm/fdedup
+    :alt: Build Status
+
+
+.. image:: https://coveralls.io/repos/themalkolm/fdedup/badge.png?branch=master
+    :target: https://coveralls.io/r/themalkolm/fdedup?branch=master
+    :alt: Coveralls
 
 =================
 File DEDUPlicator

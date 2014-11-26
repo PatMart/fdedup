@@ -7,6 +7,14 @@
     :target: https://coveralls.io/r/themalkolm/fdedup?branch=master
     :alt: Coveralls
 
+.. image:: https://pypip.in/v/fdedup/badge.png
+    :target: https://crate.io/packages/fdedup/
+    :alt: Latest PyPI version
+
+.. image:: https://pypip.in/d/fdedup/badge.png
+    :target: https://crate.io/packages/fdedup/
+    :alt: Number of PyPI downloads
+
 =================
 File DEDUPlicator
 =================

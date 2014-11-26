@@ -37,17 +37,12 @@ def get_version():
                 return eval(line.split('=')[-1])
 
 
-def get_long_description():
-    with open('README.rst') as f:
-        return f.read()
-
 setup(
     name='fdedup',
     packages=find_packages('fdedup', exclude=['static', 'tests', 'run_tests*',
                                               'requirements*']),
     version=get_version(),
     description='Command line tool to find file duplicates.',
-    long_description=get_long_description(),
     author='Alexander Krasnukhin, Alexey Ulyanov',
     author_email='the.malkom@gmail.com, sibuser.nsk@gmail.com',
     url='https://github.com/themalkolm/fdedup',

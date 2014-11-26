@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/themalkolm/fdedup.svg?branch=master
+    :target: https://travis-ci.org/themalkolm/fdedup
+
 =================
 File DEDUPlicator
 =================
@@ -18,6 +21,3 @@ Getting Started
 
 The `fdedup package documentation <http://fdedup.readthedocs.org/en/latest>`_ contains an overview of how to work with
 fdedup.
-
-.. image:: https://travis-ci.org/themalkolm/fdedup.svg?branch=master
-    :target: https://travis-ci.org/themalkolm/fdedup

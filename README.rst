@@ -6,6 +6,8 @@ fdedup (File DEDUPlicator)
 
 Find and list file duplicates in paths.
 
+It is `available on PyPI <https://pypi.python.org/pypi/fdedup>`_ and supports Python 2.7.
+
 Installation
 ------------
 

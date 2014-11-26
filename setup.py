@@ -30,7 +30,7 @@ class Tox(test_command):
 def get_version():
     import os.path
 
-    path = os.path.join('pyflakes', '__init__.py')
+    path = os.path.join('fdedup', '__init__.py')
     with open(path) as f:
         for line in f:
             if line.startswith('__version__'):

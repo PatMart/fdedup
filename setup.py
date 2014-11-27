@@ -26,22 +26,11 @@ class Tox(test_command):
         errno = tox.cmdline(args=shlex.split(self.tox_args))
         sys.exit(errno)
 
-
-def get_version():
-    import os.path
-
-    path = os.path.join('fdedup', '__init__.py')
-    with open(path) as f:
-        for line in f:
-            if line.startswith('__version__'):
-                return eval(line.split('=')[-1])
-
-
 setup(
     name='fdedup',
     packages=find_packages('fdedup', exclude=['static', 'tests', 'run_tests*',
                                               'requirements*']),
-    version=get_version(),
+    version='0.0.7',
     description='Command line tool to find file duplicates.',
     author='Alexander Krasnukhin, Alexey Ulyanov',
     author_email='the.malkom@gmail.com, sibuser.nsk@gmail.com',

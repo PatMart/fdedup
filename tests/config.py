@@ -7,6 +7,7 @@ from fdedup import fdedup
 
 
 class TestSpec(object):
+
     """
          args=          required, list of strings,  args array
          kwargs=        required, dict of strings,  kwargs
@@ -20,8 +21,19 @@ class TestSpec(object):
          stdlog=        optional, list of 3-tuples, expected log statements
     """
 
-    def __init__(self, main, args, kwargs, returncode, setup=None, teardown=None, description=None, stdin=None, stdout=None,
-                 stderr=None, stdlog=None):
+    def __init__(
+            self,
+            main,
+            args,
+            kwargs,
+            returncode,
+            setup=None,
+            teardown=None,
+            description=None,
+            stdin=None,
+            stdout=None,
+            stderr=None,
+            stdlog=None):
         self.main = main
         self.args = args
         self.kwargs = kwargs
@@ -36,6 +48,7 @@ class TestSpec(object):
 
 
 class FdedupSpec(TestSpec):
+
     def __init__(self, args, kwargs, returncode, stdout_is_json=False, *aargs, **akwargs):
         super(FdedupSpec, self).__init__(fdedup.main, args, kwargs, returncode, *aargs, **akwargs)
         self.stdout_is_json = stdout_is_json
@@ -154,7 +167,7 @@ def get_tests():
         ),
         FdedupSpec(
             setup=lambda: os.chmod('static/issue_37/kawabanga', 0000),
-            teardown=lambda: os.chmod('static/issue_37/kawabanga', 0644),
+            teardown=lambda: os.chmod('static/issue_37/kawabanga', 0o644),
             description='should complain if permission denied',
             args=['--json', 'static/issue_37'],
             kwargs={},

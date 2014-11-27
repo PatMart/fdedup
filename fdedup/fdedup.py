@@ -10,9 +10,9 @@ import os
 import sys
 import collections
 
-from .log_count_handler import LogCountHandler
+from log_count_handler import LogCountHandler
 
-from .iterate_files import iterate_files
+from iterate_files import iterate_files
 
 
 logger = logging.getLogger(__package__)

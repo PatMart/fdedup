@@ -5,7 +5,6 @@ import sys
 
 
 class OutputCapture:
-
     def __init__(self, stdin=None):
         self._new = StringIO(stdin), StringIO(), StringIO()
         self._old = (None, None, None)

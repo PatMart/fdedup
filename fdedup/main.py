@@ -46,7 +46,7 @@ def main(args=None):
     verbosity.add_argument('-v', '--verbose', action='count', default=0, help='be verbose')
     verbosity.add_argument('-q', '--quiet', action='store_true', help='be quiet')
 
-    parser.add_argument('--ignore-empty', action='store_true', help='ignore empty files')
+    parser.add_argument('--include-empty', action='store_true', help='include empty files')
     parser.add_argument('--algorithm', choices=hashlib.algorithms, default='md5', help='hash algorithm to use')
     parser.add_argument('--verify', action='store_true', help='verify duplicates bytewise')
     parser.add_argument('--json', action='store_true', help='report in json')
@@ -75,7 +75,7 @@ def main(args=None):
         opts.paths.extend(read_paths())
 
     try:
-        groups = find_duplicates(opts.paths, verify=opts.verify, ignore_empty=opts.ignore_empty,
+        groups = find_duplicates(opts.paths, verify=opts.verify, include_empty=opts.include_empty,
                                  algorithm=opts.algorithm)
     except Exception as e:
         logger.error(e)

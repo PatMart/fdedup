@@ -65,7 +65,7 @@ def verify_paths(paths):
         os.stat(path)
 
 
-def find_duplicates(paths, algorithm='md5', verify=False, ignore_empty=False):
+def find_duplicates(paths, algorithm='md5', verify=False, include_empty=False):
     verify_paths(paths)
 
     def onerror(err):
@@ -77,7 +77,7 @@ def find_duplicates(paths, algorithm='md5', verify=False, ignore_empty=False):
     paths = (os.path.normpath(path) for path in paths)
     paths = iterate_files(paths, onerror=onerror)
     groups = [paths]
-    groups = find_candidates(groups, functools.partial(file_size, empty_as_none=ignore_empty))
+    groups = find_candidates(groups, functools.partial(file_size, empty_as_none=not include_empty))
     groups = find_candidates(groups, lambda path: hash_func(path, size=1024))
     groups = find_candidates(groups, hash_func)
     if verify:

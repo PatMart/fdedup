@@ -6,6 +6,7 @@ import logging
 
 
 class LogCountHandler(logging.Handler):
+
     def __init__(self):
         super(LogCountHandler, self).__init__()
         self._counter = defaultdict(int)

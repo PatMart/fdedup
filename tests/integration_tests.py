@@ -5,8 +5,8 @@ import json
 
 import testfixtures
 
-import config
-from output_capture import OutputCapture
+from . import config
+from .output_capture import OutputCapture
 
 
 @contextmanager

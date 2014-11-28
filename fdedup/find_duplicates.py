@@ -7,7 +7,7 @@ import itertools
 import os
 import collections
 
-from iterate_files import iterate_files
+from .iterate_files import iterate_files
 
 
 logger = logging.getLogger(__package__)

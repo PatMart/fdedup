@@ -96,3 +96,6 @@ def main(args=None):
                 print path
 
     return log_counter.count(logging.ERROR) > 0
+
+if __name__ == '__main__':
+    main()

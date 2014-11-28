@@ -3,7 +3,7 @@
 import json
 import os
 
-from fdedup import fdedup
+from fdedup.main import main
 
 
 class TestSpec(object):
@@ -37,7 +37,7 @@ class TestSpec(object):
 
 class FdedupSpec(TestSpec):
     def __init__(self, args, kwargs, returncode, stdout_is_json=False, *aargs, **akwargs):
-        super(FdedupSpec, self).__init__(fdedup.main, args, kwargs, returncode, *aargs, **akwargs)
+        super(FdedupSpec, self).__init__(main, args, kwargs, returncode, *aargs, **akwargs)
         self.stdout_is_json = stdout_is_json
 
 

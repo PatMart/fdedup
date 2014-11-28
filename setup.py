@@ -29,7 +29,7 @@ class Tox(test_command):
 setup(
     name='fdedup',
     packages=['fdedup'],
-    version='0.0.7',
+    version='0.0.8',
     description='Command line tool to find file duplicates.',
     author='Alexander Krasnukhin, Alexey Ulyanov',
     author_email='the.malkom@gmail.com, sibuser.nsk@gmail.com',

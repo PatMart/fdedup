@@ -44,11 +44,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7'
     ],
-    entry_points={
-        'console_scripts': [
-            'fdedup = fdedup.fdedup:main'
-        ]
-    },
+    scripts=['scripts/fdedup'],
     tests_require=['tox'],
     cmdclass={'test': Tox}
 )

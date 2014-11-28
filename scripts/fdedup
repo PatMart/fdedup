@@ -6,8 +6,8 @@ import hashlib
 import logging
 import sys
 
-from log_count_handler import LogCountHandler
-from find_duplicates import find_duplicates
+from fdedup.log_count_handler import LogCountHandler
+from fdedup.find_duplicates import find_duplicates
 
 logger = logging.getLogger(__package__)
 

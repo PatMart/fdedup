@@ -6,9 +6,10 @@ Submodules
 
 .. toctree::
 
-   fdedup.fdedup
+   fdedup.find_duplicates
    fdedup.iterate_files
    fdedup.log_count_handler
+   fdedup.main
 
 Module contents
 ---------------

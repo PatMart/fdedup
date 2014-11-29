@@ -146,23 +146,23 @@ def get_tests():
             stderr='',
         ),
         FdedupSpec(
-            description='should not ignore empty files by default',
+            description='should ignore empty files by default',
             args=['--json', 'static/empty', 'static/empty.copy'],
+            kwargs={},
+            returncode=0,
+            stdout_is_json=True,
+            stdout=json.dumps([]),
+            stderr='',
+        ),
+        FdedupSpec(
+            description='should not ignore empty files with --include-empty',
+            args=['--json', '--include-empty', 'static/empty', 'static/empty.copy'],
             kwargs={},
             returncode=0,
             stdout_is_json=True,
             stdout=json.dumps([
                 ['static/empty', 'static/empty.copy']
             ]),
-            stderr='',
-        ),
-        FdedupSpec(
-            description='should ignore empty files if --ignore-empty is set',
-            args=['--ignore-empty', '--json', 'static/empty', 'static/empty.copy'],
-            kwargs={},
-            returncode=0,
-            stdout_is_json=True,
-            stdout=json.dumps([]),
             stderr='',
         ),
         FdedupSpec(
@@ -180,7 +180,7 @@ def get_tests():
         ),
         FdedupSpec(
             description='should not duplicate duplicates if path is listed several times',
-            args=['--json', 'static/empty', 'static/empty', 'static/empty', 'static/empty.copy'],
+            args=['--json', '--include-empty', 'static/empty', 'static/empty', 'static/empty', 'static/empty.copy'],
             kwargs={},
             returncode=0,
             stdout_is_json=True,
@@ -192,7 +192,7 @@ def get_tests():
         ),
         FdedupSpec(
             description='should work on normalized paths and understand redundant separators',
-            args=['--json', 'static/empty', './static/empty', '././static/empty', './static/issue_37/../empty',
+            args=['--json', '--include-empty', 'static/empty', './static/empty', '././static/empty', './static/issue_37/../empty',
                   './static/empty.copy'],
             kwargs={},
             returncode=0,

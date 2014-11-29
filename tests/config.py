@@ -192,8 +192,8 @@ def get_tests():
         ),
         FdedupSpec(
             description='should work on normalized paths and understand redundant separators',
-            args=['--json', '--include-empty', 'static/empty', './static/empty', '././static/empty', './static/issue_37/../empty',
-                  './static/empty.copy'],
+            args=['--json', '--include-empty', 'static/empty', './static/empty', '././static/empty',
+                  './static/issue_37/../empty', './static/empty.copy'],
             kwargs={},
             returncode=0,
             stdout_is_json=True,

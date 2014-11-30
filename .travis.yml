@@ -12,3 +12,7 @@ script:
   - tox -e $TOX_ENV
 after_success:
   - tox -e coverage
+notifications:
+  email:
+    on_success: change
+    on_failure: change

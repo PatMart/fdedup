@@ -2,7 +2,6 @@
     :target: https://travis-ci.org/themalkolm/fdedup
     :alt: Build Status
 
-
 .. image:: https://coveralls.io/repos/themalkolm/fdedup/badge.png?branch=master
     :target: https://coveralls.io/r/themalkolm/fdedup?branch=master
     :alt: Coveralls
@@ -14,6 +13,10 @@
 .. image:: https://pypip.in/d/fdedup/badge.png
     :target: https://crate.io/packages/fdedup/
     :alt: Number of PyPI downloads
+
+.. image:: https://landscape.io/github/themalkolm/fdedup/master/landscape.svg
+    :target: https://landscape.io/github/themalkolm/fdedup/
+    :alt: Health
 
 =================
 File DEDUPlicator

@@ -39,6 +39,7 @@ def chunk_reader_truncated(fileobject, max_size, max_chunk_size):
 
 
 def file_hash(path, algorithm='md5', max_size=sys.maxsize, max_chunk_size=65536):
+    """Calculate file's hash."""
     try:
         hasher = hashlib.new(algorithm)
         with open(path, 'rb') as f:

@@ -10,6 +10,7 @@ def _iterate_files(path, onerror=None):
     if os.path.isfile(path):
         yield path
 
+    # TODO Why we do not check here if it is a dir or not?
     for path, _, files in os.walk(path, onerror=onerror):
         for f in files:
             yield os.path.join(path, f)

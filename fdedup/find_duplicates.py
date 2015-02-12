@@ -38,14 +38,6 @@ def chunk_reader_truncated(fileobject, max_size, max_chunk_size):
             break
 
 
-def file_size(path, empty_as_none=False):
-    size = os.path.getsize(path)
-    if empty_as_none:
-        return size if size else None
-    else:
-        return size
-
-
 def file_hash(path, algorithm='md5', max_size=sys.maxsize, max_chunk_size=65536):
     try:
         hasher = hashlib.new(algorithm)
@@ -57,6 +49,14 @@ def file_hash(path, algorithm='md5', max_size=sys.maxsize, max_chunk_size=65536)
     except IOError as e:
         logger.error(e)
         return None
+
+
+def file_size(path, empty_as_none=False):
+    size = os.path.getsize(path)
+    if empty_as_none:
+        return size if size else None
+    else:
+        return size
 
 
 def find_candidates(groups, func):

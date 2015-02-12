@@ -6,6 +6,7 @@ import hashlib
 import itertools
 import logging
 import os
+import sys
 
 from .iterate_files import iterate_files
 
@@ -25,7 +26,7 @@ def file_size(path, empty_as_none=False):
         return size
 
 
-def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
+def file_hash(path, algorithm='md5', size=sys.maxsize, chunk_size=65536):
     try:
         hasher = hashlib.new(algorithm)
         with open(path, 'rb') as f:
@@ -33,7 +34,7 @@ def file_hash(path, algorithm='md5', size=-1, chunk_size=65536):
             for chunk in chunk_reader(f, chunk_size):
                 read += len(chunk)
                 hasher.update(chunk)
-                if size != -1 and read >= size:
+                if read >= size:
                     break
         return hasher.hexdigest()
 

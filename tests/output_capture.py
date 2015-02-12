@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from StringIO import StringIO
 import sys
+from StringIO import StringIO
 
 
 class OutputCapture:

@@ -3,12 +3,12 @@
 
 import argparse
 import hashlib
+import itertools
 import logging
 import sys
-import itertools
 
-from fdedup.log_count_handler import LogCountHandler
 from fdedup.find_duplicates import find_duplicates
+from fdedup.log_count_handler import LogCountHandler
 
 logger = logging.getLogger(__package__)
 

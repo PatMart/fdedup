@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import collections
 import functools
 import hashlib
-import logging
 import itertools
+import logging
 import os
-import collections
 
 from .iterate_files import iterate_files
-
 
 logger = logging.getLogger(__package__)
 

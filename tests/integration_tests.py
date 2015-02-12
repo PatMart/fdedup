@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from contextlib import contextmanager
 import json
+from contextlib import contextmanager
 
 import testfixtures
 

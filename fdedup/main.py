@@ -5,6 +5,7 @@ import argparse
 import hashlib
 import logging
 import sys
+import itertools
 
 from fdedup.log_count_handler import LogCountHandler
 from fdedup.find_duplicates import find_duplicates
@@ -19,10 +20,9 @@ def read_paths():
     Returns:
         iterator to read paths
     """
-    for path in sys.stdin:
-        path = path.rstrip()  # drop \n
-        if path:  # skip empty lines
-            yield path
+    return itertools.ifilter(bool,  # skip empty
+                             itertools.imap(str.rstrip,  # drop \n
+                                            sys.stdin))
 
 
 def main(args=None):

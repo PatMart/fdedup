@@ -7,6 +7,8 @@ import logging
 
 class LogCountHandler(logging.Handler):
 
+    """Log handler that counts how many time emit() method was invoked."""
+
     def __init__(self):
         super(LogCountHandler, self).__init__()
         self._counter = defaultdict(int)

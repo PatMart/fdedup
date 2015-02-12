@@ -13,11 +13,8 @@ logger = logging.getLogger(__package__)
 
 
 def chunk_reader(fileobject, chunk_size):
-    while True:
-        chunk = fileobject.read(chunk_size)
-        if not chunk:
-            break
-        yield chunk
+    return itertools.takewhile(bool,  # break when chunk is empty
+                               fileobject.read(chunk_size))
 
 
 def file_size(path, empty_as_none=False):

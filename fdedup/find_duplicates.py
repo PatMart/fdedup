@@ -71,7 +71,7 @@ def find_candidates(groups, func):
         # TODO(malkolm) Figure out if this doubles memory usage when len(groups) == 1
         for filehash, paths in (item for item in group_candidates.iteritems() if len(item[1]) > 1):
             candidates[filehash].extend(paths)
-    return (set(v) for v in candidates.itervalues() if len(v) > 1)
+    return (set(paths) for paths in candidates.itervalues() if len(paths) > 1)
 
 
 def verify_paths(paths):

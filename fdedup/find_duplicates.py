@@ -19,6 +19,15 @@ def chunk_reader(fileobject, chunk_size):
                                fileobject.read(chunk_size))
 
 
+def chunk_reader_truncated(fileobject, max_size, max_chunk_size):
+    read = 0
+    for chunk in chunk_reader(fileobject, max_chunk_size):
+        read += len(chunk)
+        yield chunk
+        if read >= max_size:
+            break
+
+
 def file_size(path, empty_as_none=False):
     size = os.path.getsize(path)
     if empty_as_none:
@@ -27,16 +36,12 @@ def file_size(path, empty_as_none=False):
         return size
 
 
-def file_hash(path, algorithm='md5', size=sys.maxsize, chunk_size=65536):
+def file_hash(path, algorithm='md5', max_size=sys.maxsize, max_chunk_size=65536):
     try:
         hasher = hashlib.new(algorithm)
         with open(path, 'rb') as f:
-            read = 0
-            for chunk in chunk_reader(f, chunk_size):
-                read += len(chunk)
+            for chunk in chunk_reader_truncated(f, max_size, max_chunk_size):
                 hasher.update(chunk)
-                if read >= size:
-                    break
         return hasher.hexdigest()
 
     except IOError as e:
@@ -76,7 +81,7 @@ def find_duplicates(paths, algorithm='md5', verify=False, include_empty=False):
     paths = iterate_files(paths, onerror=onerror)
     groups = [paths]
     groups = find_candidates(groups, functools.partial(file_size, empty_as_none=not include_empty))
-    groups = find_candidates(groups, lambda path: hash_func(path, size=1024))
+    groups = find_candidates(groups, lambda path: hash_func(path, max_size=1024))
     groups = find_candidates(groups, hash_func)
     if verify:
         import filecmp

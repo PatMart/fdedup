@@ -86,10 +86,11 @@ def find_duplicates(paths, algorithm='md5', verify=False, include_empty=False):
         if err.errno != 20:  # 'Not a directory'
             logger.error(err)
 
-    hash_func = functools.partial(file_hash, algorithm=algorithm)
-
     paths = (os.path.normpath(path) for path in paths)
     paths = iterate_files(paths, onerror=onerror)
+
+    hash_func = functools.partial(file_hash, algorithm=algorithm)
+
     groups = [paths]
     groups = find_candidates(groups, functools.partial(file_size, empty_as_none=not include_empty))
     groups = find_candidates(groups, lambda path: hash_func(path, max_size=1024))

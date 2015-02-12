@@ -14,6 +14,7 @@ logger = logging.getLogger(__package__)
 
 
 def chunk_reader(fileobject, chunk_size):
+    """Read data from fileobject by chunks."""
     return itertools.takewhile(bool,  # break when chunk is empty
                                fileobject.read(chunk_size))
 

@@ -23,13 +23,18 @@ def chunk_reader_truncated(fileobject, max_size, max_chunk_size):
     """
     Read data from fileobject by chunks. Truncate whenever max_size is read.
 
-    Note that the max size this reader can return is (max_size + max_chunk_size - 1)
+    No more than (max_size) bytes are yield.
+    No more than (max_size + max_chunk_size - 1) are read.
     """
     read = 0
     for chunk in chunk_reader(fileobject, max_chunk_size):
-        read += len(chunk)
-        yield chunk
-        if read >= max_size:
+        chunk_size = len(chunk)
+        if read + chunk_size < max_size:
+            read += chunk_size
+            yield chunk
+        else:
+            rest = max_size - read
+            yield chunk[:rest]
             break
 
 

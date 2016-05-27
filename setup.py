@@ -42,6 +42,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7'
     ],
+    install_requires=['funcy'],
     entry_points={
         'console_scripts': [
             'fdedup = fdedup.main:main'

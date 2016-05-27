@@ -7,6 +7,7 @@ import itertools
 import logging
 import os
 import sys
+import funcy
 
 from .iterate_files import iterate_files
 
@@ -16,8 +17,7 @@ logger = logging.getLogger(__package__)
 def chunk_reader(fileobject, chunk_size):
     """Read data from fileobject by chunks."""
     return itertools.takewhile(bool,  # break when chunk is empty
-                               fileobject.read(chunk_size))
-
+                               funcy.repeatedly(lambda: fileobject.read(chunk_size)))
 
 def chunk_reader_truncated(fileobject, max_size, max_chunk_size):
     """
